@@ -1,0 +1,40 @@
+{% extends 'master.html' %}
+{% block contenido %}
+{% load static %}
+{% load auth_extras %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Analisis</title>
+    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Cambio si al que se le muestra el resultado es un estudiante entonces, se agrega un boton de enviar a docente -->
+        <!-- Cambio se debe agregar un boton para compartir, este boton no importara si es para un docente o estudiante,
+             en el caso de que se agrege dicho boton, el documento sera publico -->
+        {% if resultado %}
+        {% if resultado.estado %}
+        <h1>Documento analizado exitosamente.</h1>
+        <iframe src="{{ resultado.archivo.url }}" width="100%" height="500px"></iframe>
+        <a class="btn btn-info"  href="{% url 'compartir_documento' resultado.resultado_id %}"
+                                role="button">Compartir.</a>
+        <a class="btn btn-info"  href="{% url 'detalle_documento' resultado.resultado_id %}"
+        role="button">Editar Detalles.</a>
+        {% else %}
+        <h1>Documento no disponible</h1>
+        <p>No se puede mostrar una previsualización del documento.</p>
+        {% endif %}
+        {% else %}
+        <p>No hay documentos disponibles</p>
+
+        {% endif %}
+    </div>
+
+</body>
+
+</html>
+{% endblock %}

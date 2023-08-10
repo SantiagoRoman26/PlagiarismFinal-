@@ -1,0 +1,110 @@
+{% extends 'master.html' %}
+{% load auth_extras %}
+{% block contenido %}<!--aqui-->
+
+<html>
+
+<head>
+    <meta>
+    <title>Usuarios</title>
+    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light">
+        {% if message %}
+            <div class="alert alert-info" style="display: flex; justify-content: center; align-items: center;">
+                {{ message }}
+            </div>
+        {% endif %}
+        <div class="container-fluid">
+            <h4>Lista de Usuarios</h4>
+            
+            <form class="d-flex" method="POST">{% csrf_token %}
+                <input  class="form-control" name="busqueda" placeholder="Ingrese su Busqueda"
+                    aria-label="busqueda">
+                <button style="margin-left: 10px; height: 50px;" class="btn btn-info" type="submit">Buscar</button>
+                {% if cond %}
+                <a style="margin-left: 10px;background-color: rgb(54, 54, 207); height: 50px;" 
+                class="btn btn-primary" href="{% url 'generar_usuario'%}" role="button">Generar Usuario</a>
+                {% endif%}
+                <a style="margin-left: 10px;background-color: rgb(54, 54, 207); height: 50px;" 
+                class="btn btn-primary" href="{% url 'autorizaciones'%}" role="button">Autorizar usuarios</a>
+            </form> 
+        </div>
+    </nav>
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuarios in listaUsuarios%}
+                <tr>
+                    <td>{{usuarios.usuario_id}}</td>
+                    <td>{{usuarios.nombres}}</td>
+                    <td>{{usuarios.apellidos}}</td>
+                    <td>{{usuarios.correo}}</td>
+                    <td>{{usuarios.userU.groups.first}}</td>
+                    <td >
+                        <a class="btn btn-danger" onclick="confirmDeleteAndRedirect('{% url 'eliminar_usuario' usuarios.usuario_id %}')" 
+                            role="button">Eliminar</a>
+                        <a class="btn btn-info"  href="{% url 'modificar_usuario' usuarios.usuario_id %}"
+                            role="button">Editar</a>
+                            <a class="btn btn-info" onclick="confirmRolAndRedirect('{% url 'rol_usuario' usuarios.usuario_id %}')" 
+                            role="button">Cambiar Rol</a>
+                            
+                    </td>
+                </tr>
+
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Script para personalizar el mensaje de confirmación -->
+<script>
+    function confirmRolAndRedirect(url) {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Esta acción cambiará el rol del usuario.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Cambiar Rol",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = url; // Redireccionar si se confirma
+        }
+      });
+    }
+    function confirmDeleteAndRedirect(url) {
+      Swal.fire({
+        title: "¿Estás seguro, esta accion no se podra revertir?",
+        text: "Esta acción eliminara el usuario registrado.",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Eliminar usuario",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = url; // Redireccionar si se confirma
+        }
+      });
+    }
+  </script>
+{% endblock %}<!--aqui-->

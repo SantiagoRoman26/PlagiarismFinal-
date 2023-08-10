@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperación de Contraseña</title>
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #999999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Recuperación de Contraseña</h2>
+        <p>Hemos recibido una solicitud para restablecer la contraseña de su cuenta. Su nueva contraseña generada es:</p>
+        <p><strong>{{ nueva_contraseña }}</strong></p>
+        <p>Le recomendamos cambiar su contraseña después de iniciar sesión.</p>
+        <p>Si no solicitó esta acción, se recomienda comunicarse con un administrador.</p>
+        <a class="btn" href="{{ url }}">Iniciar Sesión</a>
+    </div>
+    <div class="footer">
+        <p>No responda a este correo electrónico. Si necesita ayuda, contáctenos en support@tusitio.com.</p>
+    </div>
+</body>
+
+</html>

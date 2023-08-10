@@ -1,0 +1,7 @@
+<h4>Modificar Usuario</h4>
+<form method="POST" > {% csrf_token %}
+    <div class="form-group row">
+        {{formulario_usuario.as_p}}
+    </div>
+    <button type="submit">Modificar Usuario</button>
+</form>

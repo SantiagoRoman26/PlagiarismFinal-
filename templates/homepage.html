@@ -1,0 +1,130 @@
+{% extends 'master.html' %}
+{% load auth_extras %}
+{% block contenido %}
+<style>
+  .buttonClass1 {
+    font-size: 15px;
+    font-family: Arial;
+    width: 200px;
+    height: 50px;
+    border-width: 1px;
+    color: #ffffff;
+    border-color: #057fd0;
+    font-weight: bold;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    box-shadow: 0px 1px 0px 0px #f0f7fa;
+    text-shadow: 0px -1px 0px #5b6178;
+    background: linear-gradient(#33bdef, #019ad2);
+    margin-left: 20px;
+  }
+
+  .buttonClass1:hover {
+    background: linear-gradient(#019ad2, #33bdef);
+  }
+
+  .card_hotel {
+    flex: 1 150px;
+    padding: 2px 5px 2px 5px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-right: 20px
+  }
+
+  .card-title {
+    margin-left: 20px;
+  }
+
+  .card-subtitle {
+    margin-left: 20px;
+  }
+
+  .card-text {
+    margin-left: 20px;
+  }
+</style>
+
+{% if user.is_authenticated %}
+<h1> Detector</h1>
+{% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}" {% endif %} style= color:black>{{ message }}</li>
+      {% endfor %}
+  </ul>
+{% endif %}
+<h5 style="text-align: center;">Bienvenido {{ user.username }}!</h5>
+{% endif %}
+
+<div class="container">
+
+
+  <div class="d-flex flex-wrap flex-row-reverse">
+    <div class="card card_hotel d-flex flex-column justify-content-between">
+      <div class="car-body">
+        <h5 class="card-title">Resultados</h5>
+        <h6 class="card-subtitle">Revisar Resultados</h6>
+
+        <p class="card-text">Ver los resultados generados</p>
+      </div>
+
+      <div>
+
+        <a href="/plagio" class="buttonClass1" >Resultados</a>
+      </div>
+    </div>
+
+
+    <div class="card card_hotel d-flex flex-column justify-content-between">
+      <div class="car-body">
+        <h5 class="card-title">Documentos</h5>
+        <h6 class="card-subtitle">Gestion de documentos</h6>
+
+        <p class="card-text">Subir un nuevo documento</p>
+      </div>
+
+      <div>
+        <a href="/documento/upload" class="buttonClass1">Documentos</a>
+      </div>
+    </div>
+
+    {% if request.user|has_group:"admin" %}
+    <div class="card card_hotel d-flex flex-column justify-content-between">
+      <div class="car-body">
+        <h5 class="card-title">Admin</h5>
+        <h6 class="card-subtitle">Ingresar al Admin</h6>
+
+        <p class="card-text">Configurar las opciones de Django</p>
+      </div>
+
+      <div>
+        <a href="/admin" class="buttonClass1">Admin</a>
+      </div>
+    </div>
+
+    <div class="card card_hotel d-flex flex-column justify-content-between">
+      <div class="car-body">
+        <h5 class="card-title">Usuarios</h5>
+        <h6 class="card-subtitle">Gestionar usuarios</h6>
+
+        <p class="card-text">Gestionar los usuarios.</p>
+      </div>
+
+      <div>
+        <a href="/usuario" class="buttonClass1">Usuario</a>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+  <p id="mensaje"></p>
+
+  <!-- Botón para enviar el formulario y mostrar el mensaje -->
+  
+</div>
+
+{% endblock %}

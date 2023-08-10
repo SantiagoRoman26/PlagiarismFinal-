@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Autorización de registro</title>
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f6f6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333333;
+            text-align: center;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Autorización de registro</h1>
+        <p>¡Hola {{ admin }}!</p>
+        <p>El usuario {{ user_nombre }} con el correo electronico {{ user_mail }} a solicitado registrarse en el sitio web. Por favor, haz clic en el siguiente enlace para confirmar el registro:</p>
+        <p><a class="button" href="{{ url }}">Confirmar registro</a></p>
+        <p>Si no has solicitado este registro, puedes ignorar este correo electrónico.</p>
+        <p>¡Gracias por tu interés en nuestro sitio web!</p>
+    </div>
+</body>
+</html>

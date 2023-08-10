@@ -1,0 +1,17 @@
+{% extends 'master.html' %}
+{% block contenido %}<!--aqui-->
+<html>
+
+<head>
+    <meta>
+    <title>Crear Usuario</title>
+    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
+</head>
+<h4>Crear Usuario</h4>
+<form method="POST"> {% csrf_token %}
+    {{formulario.as_p}}
+    <button class="btn btn-primary" type="submit">Crear Usuario</button>
+</form>
+
+</html>
+{% endblock %}<!--aqui-->

@@ -1,0 +1,40 @@
+{% extends 'master.html' %}
+{% load static %}
+
+{% block contenido %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Documento en Proceso</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            padding: 100px;
+            text-align: center;
+        }
+
+        .btn {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Análisis de Documento en Proceso</h2>
+        <p>Su documento está siendo analizado. Recibirá un correo cuando el proceso haya concluido.</p>
+        <a class="btn btn-primary" href="{% url 'homepage'%}">Regresar</a>
+    </div>
+</body>
+
+</html>
+{% endblock %}

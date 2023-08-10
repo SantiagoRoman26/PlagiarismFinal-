@@ -1,0 +1,50 @@
+{% extends 'master.html' %}
+{% block contenido %}
+
+<head>
+    <meta>
+    <title>Usuarios</title>
+    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h4>Lista de Usuarios:</h4>
+        <table class="table table-sm" style="width: 100px;">
+            <tr style="border-style: solid;border-width: 1px;">
+                <th style="width: 10px;border-style: solid;border-width: 1px;">Numero:</th>
+                <th style="border-style: solid;border-width: 1px;">algo</th>
+            </tr>
+
+        </table>
+
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo</th>
+                    <th>Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuarios in listaUsuarios%}
+                {% if not usuarios.estado %}
+                <tr>
+                    <td>{{usuarios.usuario_id}}</td>
+                    <td>{{usuarios.nombres}}</td>
+                    <td>{{usuarios.apellidos}}</td>
+                    <td>{{usuarios.correo}}</td>
+                    <td>
+                    <a class="btn btn-info"  href="{% url 'activar' usuarios.usuario_id %}"
+                                role="button">Autorizar.</a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endblock %}
+    </div>
+</body>

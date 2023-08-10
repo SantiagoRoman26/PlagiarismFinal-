@@ -1,0 +1,37 @@
+<div class="card-header">
+    
+    
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top" style="padding: 5px ;">
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarNavDropdown" aria-label="Toggle Navigation" aria-expanded="false">
+            <span class="navbar-toggler-icon"> </span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a href="https://unl.edu.ec/" target="_blank">
+                <img class="text-decoration" style="width: 350px;"
+                  src="https://7e88551e9c.imgdist.com/public/users/Integrators/BeeProAgency/1006022_990869/unnamed.png" />
+              </a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active"> <a class="nav-link" href="{% url 'homepage'%}">Home</a></li>
+            </ul>
+            {% if user.is_authenticated %}
+            <p></p>
+            <ul class="navbar-nav " id="derecha" style="line-height: 10px ;">
+
+                <li class="nav-item" id="margin"> <a class="nav-link" href="{% url 'logout' %}">Salir</a></li>
+                <li class="nav-item" id="margin"> <a class="nav-link" href="{% url 'passwordChange' %}">Cambiar Contraseña</a></li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav " id="derecha">
+                <li class="nav-item id="margin"> <a class="nav-link" href="{% url 'autenticar' %}">Ingresar</a></li>
+                <li class="nav-item" id="margin"> <a class="nav-link" href="{% url 'registrar' %}">Registrar</a></li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+    <center>
+        <h1>Universidad Nacional de Loja</h1>
+    </center>
+</div>

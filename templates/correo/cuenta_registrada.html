@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de cuenta exitoso</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Registro de cuenta exitoso!</h1>
+        <p>Gracias {{ user_nombre }} por registrarte en nuestro sitio. Tu cuenta ha sido autorizada con éxito.</p>
+        <a class="btn btn-primary" href="{{ url }}" role="button">Iniciar sesión</a>
+    </div>
+</body>
+</html>

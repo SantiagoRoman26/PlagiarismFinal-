@@ -1,0 +1,77 @@
+{% load static %}
+{% load i18n %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Seleccionar Rol</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/autorizar/seleccionar_rol.css' %} " media="screen">
+    <link id="u-theme-google-font" rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+</head>
+
+<body>
+    <p>Paso {{ wizard.steps.step1 }} de {{ wizard.steps.count }}</p>
+    {% if wizard.form.forms %}
+    <p>algo</p>
+    {% else %}
+    <section class="u-align-center u-clearfix u-custom-color-2 u-section-1" id="sec-7573">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <h2 class="u-text u-text-default u-text-1">Escoja su Rol </h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ wizard.management_form }}
+                <div class="u-list u-list-1">
+                    <div class="u-repeater u-repeater-1">
+                        <div
+                            class="u-align-center u-container-style u-custom-color-3 u-custom-item u-list-item u-repeater-item u-list-item-1">
+                            <div class="u-container-layout u-similar-container u-container-layout-1">
+                                <span class="u-file-icon u-icon u-icon-rounded u-text-white u-icon-1">
+                                    <img src="{% static 'images/1719105.png' %}" alt="">
+                                </span>
+                                <h5 class="u-text u-text-default u-text-2">Estudiante</h5>
+                                <p class="u-text u-text-3"> Capaz de realizar los análisis, y enviarlos a un docente
+                                    para su
+                                    revisión.</p>
+                                <button type="submit" onclick="setRolValue('estudiante');"
+                                    class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-1"
+                                    name="rol" value="estudiante">Seleccionar</button>
+                            </div>
+                        </div>
+                        <div
+                            class="u-align-center u-container-style u-custom-color-3 u-custom-item u-list-item u-repeater-item">
+                            <div class="u-container-layout u-similar-container u-container-layout-2">
+                                <span class="u-file-icon u-icon u-icon-rounded u-text-white u-icon-2">
+                                    <img src="{% static 'images/185578-7.png' %}" alt=""></span>
+                                <h5 class="u-text u-text-default u-text-4">Docente</h5>
+                                <p class="u-text u-text-5"> Subir documentos, generar análisis y opciones avanzadas para
+                                    realizar un
+                                    análisis.</p>
+                                <button type="submit" onclick="setRolValue('docente');"
+                                    class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-2"
+                                    name="rol" value="docente">Seleccionar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="id_rol" name="{{ wizard.form.prefix }}-rol" value="{{ wizard.form.rol.value }}">
+            </form>
+        </div>
+    </section>
+    {% endif %}
+
+</body>
+
+</html>
+<script>
+    function setRolValue(value) {
+        document.getElementById("id_rol").value = value;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Subir Archivo</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/documento/subir.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        {% if mensaje %}
+        <p>{{ mensaje }}</p>
+        {% endif %}
+        <h1>Subir Archivo</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="archivo">
+            <input type="submit">
+        </form>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/documento/subi.js' %}"></script>
+</body>
+
+</html>

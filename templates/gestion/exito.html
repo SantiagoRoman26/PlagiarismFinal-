@@ -1,0 +1,20 @@
+{% extends 'master.html' %}
+
+{% block contenido %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página de Éxito</title>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron mt-5">
+            <h1 class="display-4">¡Resultado compartido con éxito!</h1>
+            <p class="lead">Gracias por compartir el resultado.</p>
+            <hr class="my-4">
+            <a class="btn btn-primary btn-lg" href="{% url 'homepage'%}" role="button">Volver a la página principal</a>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

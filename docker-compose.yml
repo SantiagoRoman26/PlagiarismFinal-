@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+
+  django:
+    build: .
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0.27
+    ports:
+      - '3307:3306'
+    environment:
+      - MYSQL_USER=santi2686
+      - MYSQL_PASSWORD=S@nti2686
+      - MYSQL_DATABASE=plagiarism_detector
+      - MYSQL_ROOT_PASSWORD= root
+    volumes:
+      - ./MySQL:/var/lib/mysql

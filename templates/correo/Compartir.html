@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Correo de Compartir Documento</title>
+    <!-- Agrega aquí tus estilos CSS si es necesario -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Hola,</p>
+                        <p>El usuario {{ User_nombre }} ha decidido compartir un resultado contigo dejando el siguiente mensaje:</p>
+                        <p>{{ comentario }}</p>
+                        <p>Adjunto encontrarás el documento compartido.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary">Ver Documento</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

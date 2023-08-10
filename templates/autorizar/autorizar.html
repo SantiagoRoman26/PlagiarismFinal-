@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/autorizar.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        {% if usuario.autorizado %}
+        <h2>Autorizacion para un docente</h2>
+        <p>el usuario {{usuario.nombres}}{{usuario.apellidos}} con el correo {{usuario.correo}} ha solicitado registrarse como un docente</p>
+        {% else %}
+        <h2>Autorizacion para un estudiante</h2>
+        <p>el usuario {{usuario.nombres}}{{usuario.apellidos}} con el correo {{usuario.correo}} ha solicitado registrarse como un estudiante</p>
+        {% endif %}
+        <p>seleccione una opcion para aceptar o rechazar la solicitud del nuevo usuario.</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ formulario_autorizacion.as_p }}
+
+            <div class="button-container">
+                <button class="submit-button" type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tu Tabla con Bootstrap</title>
+    <!-- Agrega aquí los estilos de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Tabla de Plagios</h2>
+        <div style="text-align: center;">
+            <p id="porcentaje-plagio">Porcentaje de plagio: </p>
+        </div>
+        <p>num oraciones: {{ num_oraciones }}</p>
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Oración plagiada</th>
+                    <th>Oración original</th>
+                    <th>Porcentaje de plagio</th>
+                    <th>Lugar donde se encontró</th>
+                    <th>Ubicación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fila in matriz %}
+                <tr id="fila-{{ forloop.counter0 }}">
+                    <td>{{ fila.0 }}</td>
+                    <td>{{ fila.1 }}</td>
+                    <td>{{ fila.2 }}</td>
+                    <td>{{ fila.3 }}</td>
+                    <td>{{ fila.4 }}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="eliminarFila({{ forloop.counter0 }})">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Botones para confirmar o descartar cambios -->
+        <button id="btn-confirmar" class="btn btn-primary" style="display: none;">Confirmar cambios</button>
+        <button id="btn-descartar" class="btn btn-secondary" style="display: none;">Descartar cambios</button>
+
+        <!-- Formulario oculto para enviar la información de filas eliminadas -->
+        <form id="form-filas-eliminadas" method="post" action="{% url 'eliminar_filas' resultado.resultado_id %}">
+            {% csrf_token %}
+            <input type="hidden" name="filas_eliminadas" class="filas-eliminadas">
+        </form>
+    </div>
+
+    <!-- Agrega aquí los scripts de Bootstrap y tu JavaScript para la funcionalidad de confirmar o descartar cambios -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+        let filasEliminadas = [];  // Variable para almacenar los índices de filas eliminadas
+        let numOraciones = {{ num_oraciones }};
+        
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // Calcular el porcentaje de plagio inicial
+            const numFilas = document.querySelectorAll('tbody tr').length;
+            const porcentajePlagio = calcularPorcentajePlagioPromedio(numFilas);
+
+            // Actualizar el texto del elemento con el porcentaje de plagio inicial
+            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio promedio: ${porcentajePlagio.toFixed(2)}%`;
+        });
+
+        function calcularPorcentajePlagioPromedio(numFilas) {
+            let totalPlagio = 0;
+
+            // Calcular la suma de los porcentajes de plagio de las filas visibles
+            const filasVisibles = document.querySelectorAll('tbody tr:not(.fila-eliminada)');
+            filasVisibles.forEach((fila) => {
+                const porcentajePlagioFila = parseFloat(fila.children[2].textContent); // Obtiene el valor de Porcentaje de plagio (tercer <td>)
+                totalPlagio += porcentajePlagioFila;
+            });
+
+            // Calcular el promedio
+            const numFilasVisibles = filasVisibles.length;
+            const porcentajePromedioPlagio = (totalPlagio / numFilasVisibles)*100;
+
+            return porcentajePromedioPlagio;
+        }
+
+        function confirmarCambios() {
+            
+            // Obtener los índices de las filas eliminadas
+            //filasEliminadas = Array.from(document.getElementsByClassName('fila-eliminada')).map((element) => element.dataset.index);
+            console.log('filasEliminadasActualizadas', filasEliminadas);
+
+            // Actualizar el valor del campo oculto
+            document.querySelector('#form-filas-eliminadas .filas-eliminadas').value = JSON.stringify(filasEliminadas);
+            
+            console.log('valorActualizado', document.querySelector('#form-filas-eliminadas .filas-eliminadas').value);
+            // Mostrar mensaje de confirmación (opcional)
+            alert('Los cambios se han confirmado.');
+            // Enviar el formulario
+            document.getElementById('form-filas-eliminadas').submit();
+
+                        // Ocultar botones de confirmar y descartar
+            document.getElementById('btn-confirmar').style.display = 'none';
+            document.getElementById('btn-descartar').style.display = 'none';
+
+            
+        }
+    
+        function descartarCambios() {
+            // Restaurar las filas eliminadas (opcional, si quieres que se restauren al pulsar "Descartar cambios")
+            filasEliminadas.forEach((filaIndex) => {
+                document.getElementById(`fila-${filaIndex}`).style.display = '';
+                document.getElementById(`fila-${filaIndex}`).classList.remove('fila-eliminada');  // Eliminar la clase 'fila-eliminada'
+            });
+    
+            // Vaciar la lista de filas eliminadas
+            filasEliminadas = [];
+            
+            // Calcular el porcentaje de plagio inicial
+            const numFilas = document.querySelectorAll('tbody tr').length;
+            const porcentajePlagio = calcularPorcentajePlagioPromedio(numFilas);
+
+            // Actualizar el texto del elemento con el porcentaje de plagio inicial
+            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio: ${porcentajePlagio}%`;
+            // Ocultar botones de confirmar y descartar
+            document.getElementById('btn-confirmar').style.display = 'none';
+            document.getElementById('btn-descartar').style.display = 'none';
+        }
+    
+        function eliminarFila(filaIndex) {
+            // Ocultar la fila que se va a eliminar
+            console.log('Eliminar fila:', filaIndex);
+            document.getElementById(`fila-${filaIndex}`).style.display = 'none';
+            document.getElementById(`fila-${filaIndex}`).classList.add('fila-eliminada');  // Agregar la clase 'fila-eliminada'
+    
+            // Agregar el índice de la fila eliminada a la lista
+            filasEliminadas.push(filaIndex);
+            console.log('filasEliminadas', filasEliminadas);
+
+             // Calcular el nuevo porcentaje de plagio promedio
+            const filasVisibles = document.querySelectorAll('tbody tr:not(.fila-eliminada)');
+            let totalPlagio = 0;
+
+            filasVisibles.forEach((fila) => {
+                const porcentajePlagioFila = parseFloat(fila.children[2].textContent); // Obtiene el valor de Porcentaje de plagio (tercer <td>)
+                totalPlagio += porcentajePlagioFila;
+            });
+
+            const numFilasVisibles = filasVisibles.length;
+            const porcentajePromedioPlagio = (totalPlagio / numFilasVisibles)*100;
+
+            // Actualizar el texto del elemento con el nuevo porcentaje promedio de plagio
+            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio promedio: ${porcentajePromedioPlagio.toFixed(2)}%`;
+
+            // Mostrar los botones de confirmar y descartar cambios
+            document.getElementById('btn-confirmar').style.display = '';
+            document.getElementById('btn-descartar').style.display = '';
+        }
+    
+        // Agregar los eventos a los botones de confirmar y descartar
+        document.getElementById('btn-confirmar').addEventListener('click', confirmarCambios);
+        document.getElementById('btn-descartar').addEventListener('click', descartarCambios);
+    
+    </script>
+    
+</body>
+</html>

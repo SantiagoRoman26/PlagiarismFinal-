@@ -1,0 +1,17 @@
+{% extends 'master.html' %}
+{% block contenido %}<!--aqui-->
+<html>
+
+<head>
+    <meta>
+    <title>Gestion de documento</title>
+    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
+</head>
+<h4>Envio al docente</h4>
+<form method="POST"> {% csrf_token %}
+    {{formulario_gestion.as_p}}
+    <button class="btn btn-primary" type="submit">Enviar</button>
+</form>
+
+</html>
+{% endblock %}<!--aqui-->

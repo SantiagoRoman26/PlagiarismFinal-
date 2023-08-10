@@ -1,0 +1,56 @@
+{% extends 'master.html' %}
+{% block contenido %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Compartir Documento</title>
+    <!-- Agrega aquí tus estilos CSS -->
+    <!-- Dependencias de Bootstrap (CSS y JavaScript) -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Compartir Documento</h2>
+        <form action="{% url 'compartir_documento' resultado.resultado_id %}" method="post" id="formulario-compartir">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="correo">Correo electrónico:</label>
+                <input type="email" class="form-control" name="correo" required>
+                <button type="button" class="btn btn-sm btn-primary" id="agregar-correo">+</button>
+            </div>
+
+            <!-- Espacio para mostrar campos de correo adicionales -->
+            <div id="campos-correo-adicionales"></div>
+
+            <div class="form-group">
+                <label for="comentario">Comentario:</label>
+                <textarea class="form-control" name="comentario" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Compartir</button>
+        </form>
+    </div>
+
+    <!-- Agrega aquí tus scripts JavaScript si los necesitas -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Manejador del botón "+"
+            $("#agregar-correo").click(function () {
+                var campoCorreo = '<div class="form-group">';
+                campoCorreo += '<label for="correo">Correo electrónico:</label>';
+                campoCorreo += '<input type="email" class="form-control" name="correo" required>';
+                campoCorreo += '</div>';
+
+                // Agregar el campo de correo al formulario
+                $("#campos-correo-adicionales").append(campoCorreo);
+            });
+        });
+    </script>
+    <!-- Dependencias de Bootstrap (JavaScript) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{% endblock%}

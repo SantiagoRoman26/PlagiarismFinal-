@@ -1,0 +1,39 @@
+﻿{% extends 'master.html' %}
+<!doctype html>
+<html lang="en">
+
+    {% block contenido %}
+<body>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="node_modules/open-iconic/font/css/open-iconic-bootstrap.min.css">
+
+
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="{% url 'homepage'%}">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">About</li>
+            </ol>
+        </nav>
+        <div>
+            <p>
+                Lorem Ipsun is simply dunny text of the printing and typesetting industry.
+                Lorem has beem the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a gallery of type and scrimbled it to make a type specific book.
+                It has survived not only fice centuriesm but olso the leap into electronic typesetting,
+                remaingning essentially unchanged. It was populariredes in the 1960s with the release of letraset
+                sheets containing Lorem Ipsum passages, and more recentrly with desktop publishing software like
+                Aldus PageMaker including versions of Lorem Ipsum.
+                <a href="https://es.lipsum.com/">Lorem Ipsum</a>
+            </p>
+        </div>
+    </div>
+    
+</body>
+{% endblock %} 
+</html>
