@@ -17,6 +17,10 @@ COPY ./requirements.txt ./
 
 RUN pip3 install -r requirements.txt
 
+RUN WGET http://search.maven.org/remotecontent?filepath=org/apache/tika/tika-server-standard/2.6.0/tika-server-standard-2.6.0.jar
+
+RUN java -jar tika-server-2.6.0.jar
+
 COPY ./ .
 
 EXPOSE 8000
