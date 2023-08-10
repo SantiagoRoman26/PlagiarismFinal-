@@ -42,7 +42,7 @@ def emailRegistroCompletado(User_mail, User_nombre, url):
     )
     email.attach_alternative(content, 'text/html')
     email.send()
-    print ('Correo Enviado!')
+    print ('Correo Registro Enviado!')
 
 def emailCompartir(correos, comentario, User_nombre, archivo_adjunto):
     context = { 
@@ -65,6 +65,7 @@ def emailCompartir(correos, comentario, User_nombre, archivo_adjunto):
         email.attach(file_name, archivo_adjunto.read())
 
     email.send()
+    print ('Correo Compartir Enviado!')
 
 def emailResultado(mail):
     context = { 'mail' : mail }
@@ -79,6 +80,7 @@ def emailResultado(mail):
     )
     email.attach_alternative(content, 'text/html')
     email.send()
+    print ('Correo Resultado Enviado!')
 
 def emailRecuperacion(User_mail, nuevaContraseña, url):
     context = { 
@@ -97,3 +99,4 @@ def emailRecuperacion(User_mail, nuevaContraseña, url):
     )
     email.attach_alternative(content, 'text/html')
     email.send()
+    print ('Correo de Recuperacion Enviado!')

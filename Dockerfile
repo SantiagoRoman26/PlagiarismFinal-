@@ -10,6 +10,9 @@ RUN sudo apt update && sudo apt install -y --force-yes libblas-dev liblapack-dev
 
 RUN pip install --upgrade pip 
 
+# Instala Java
+RUN apt-get update && apt-get install -y default-jre
+
 COPY ./requirements.txt ./
 
 RUN pip3 install -r requirements.txt
