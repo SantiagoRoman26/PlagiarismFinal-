@@ -33,6 +33,8 @@ DATABASES = {
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'templates/static/')
+
+MEDIA_ROOT = BASE_DIR / 'uploads'
 # STATIC_URL = 'static/'
 
 

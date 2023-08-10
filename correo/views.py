@@ -86,7 +86,7 @@ def emailRecuperacion(User_mail, nuevaContraseña, url):
         'nueva_contraseña' : nuevaContraseña,
         'url' : url,
                }
-    template = get_template('correo/recuperar_contraseña.html  ')
+    template = get_template('correo/recuperar_contrasena.html  ')
     content = template.render(context)
     email = EmailMultiAlternatives(
         'Un correo de prueba',

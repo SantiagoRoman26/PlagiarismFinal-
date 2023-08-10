@@ -19,7 +19,7 @@
                     <iframe src="{{ documento.archivo.url }}" width="100%" height="500px"></iframe>
                 {% elif documento.tipo == 'word' %}
                     <div class="word-preview">
-                        <a href="{{ documento.archivo.url }}">Descargar el documento</a>
+                        <a href="{{ documento.archivo.path }}">Descargar el documento</a>
                     </div>
                 {% else %}
                     <p>No se puede mostrar una previsualización del documento.</p>
