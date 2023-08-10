@@ -13,6 +13,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = [ '*' ]
 
+CORS_ALLOW_ALL_ORIGINS=True
+
+CSRF_TRUSTED_ORIGINS = [ 'https://plagiarismfinal-production.up.railway.app/']
+
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

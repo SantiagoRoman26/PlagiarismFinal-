@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group, User
 from django.db.models.deletion import ProtectedError  
 from django.db.models import Q 
 from django.urls import reverse
+from django.contrib import messages
 
 def verificarRolAnterior(usuario_id):
     usuario = Usuario.objects.get(usuario_id=usuario_id)
@@ -67,16 +68,33 @@ def eliminarUsuario(request, usuario_id):
     if user.groups.filter(name = "admin").exists():
         try:
             rolAnterior,idRol = verificarRolAnterior(usuario_id)
+            user = User.objects.get(email = usuario.correo)
             if rolAnterior == 2:
+                docente_grupo=Group.objects.get(name='docente')
                 docente = Docente.objects.get(docente_id = idRol)
+                user.groups.remove(docente_grupo)
                 docente.delete()
+            elif rolAnterior == 3:
+                user.is_staff = False
+                user.is_superuser = False
+                admin_grupo=Group.objects.get(name='admin')
+                user.groups.remove(admin_grupo)
+            elif rolAnterior == 1:
+                estudiante = Estudiante.objects.get(estudiante_id = idRol)
+                estudiante_grupo=Group.objects.get(name='estudiante')
+                user.groups.remove(estudiante_grupo)
+                estudiante.delete()
+                
             usuario = Usuario.objects.get(usuario_id=usuario_id)
+            messages.success(request, 'Usuario '+ usuario.nombres +' eliminado')
+            user.delete()
             usuario.delete()
             return redirect(index)
         except ProtectedError as e:
             # Manejo del error
             registros_asociados = e.protected_objects
             message = f"No se puede eliminar el Docente debido a registros asociados en GestionDocumentos: {registros_asociados}"
+            messages.success(request, message)
             url = reverse('usuarios') + f'?message={message}'
             return redirect(url)
             
@@ -96,6 +114,7 @@ def modificarUsuario(request, usuario_id):
         if formulario_usuario.is_valid():
             #ORM
             formulario_usuario.save()
+            messages.success(request, 'Usuario '+ usuario.nombres +' editado')
         return redirect(index)
     return render (request, 'usuarios/modificar.html', locals())
     # else:

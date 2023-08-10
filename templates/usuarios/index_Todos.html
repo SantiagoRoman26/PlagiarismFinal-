@@ -18,6 +18,15 @@
                 {{ message }}
             </div>
         {% endif %}
+        {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <div class="alert alert-info" style="display: flex; justify-content: center; align-items: center;">
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %} style= color:black>{{ message }}</li>
+              </div>
+              {% endfor %}
+          </ul>
+        {% endif %}
         <div class="container-fluid">
             <h4>Lista de Usuarios</h4>
             
