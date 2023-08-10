@@ -9,4 +9,4 @@ python manage.py wait_for_db --settings=PlagiarismDetector.settings.production
 python manage.py migrate --settings=PlagiarismDetector.settings.production
 
 echo 'Running server...'
-gunicorn --env DJANGO_SETTINGS_MODULE=PlagiarismDetector.settings.production PlagiarismDetector.wsgi:application --bind 0.0.0.0:$PORT
+python manage.py runserver --settings=PlagiarismDetector.settings.production 0.0.0.0:$PORT
