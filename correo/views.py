@@ -71,7 +71,7 @@ def emailResultado(mail):
     template = get_template('correo/proceso_concluido.html')
     content = template.render(context)
     email = EmailMultiAlternatives(
-        'Un correo de prueba',
+        'Resultado de, analisis',
         'Resultado finalizado',
         settings.EMAIL_HOST_USER,
         [mail] #todos los destinatarios a quien enviarlos
@@ -86,7 +86,7 @@ def emailRecuperacion(User_mail, nuevaContraseña, url):
         'nueva_contraseña' : nuevaContraseña,
         'url' : url,
                }
-    template = get_template('correo/recuperar_contrasena.html  ')
+    template = get_template('correo/recuperar_contrasena.html')
     content = template.render(context)
     email = EmailMultiAlternatives(
         'Un correo de prueba',
