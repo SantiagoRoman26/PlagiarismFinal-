@@ -17,6 +17,8 @@ COPY ./requirements.txt ./
 
 RUN pip3 install -r requirements.txt
 
+RUN python -m nltk.downloader punkt
+
 COPY ./ .
 
 EXPOSE 8000
