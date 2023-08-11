@@ -104,7 +104,7 @@ def main(directorio_archivo):
         for index, thread in enumerate(hilos_principales):
             thread.join()
 
-        log.info("Obteniendo resultados finales ...")
+        print("Obteniendo resultados finales ...")
 
         plagio = plagio_de_otros_tics.copy()
         for (oracion, posible_plagio, porcentaje, url, ubicacion) in plagio_de_internet:

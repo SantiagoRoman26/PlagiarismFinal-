@@ -49,7 +49,7 @@
                     <td>{{resultado.management.docente.usuario.nombres}} {{resultado.management.docente.usuario.apellidos}}</td>
                     {% endif %}
 
-                    {% if resultado.ejecutando %}
+                    {% if resultado.ejecutando or resultado.ejecutando == 1%}
                     <td><span style='color:red'>Ejecucion en proceso...</span></td>
                     {%else%}
                     <td >
