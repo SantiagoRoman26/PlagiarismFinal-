@@ -23,7 +23,3 @@ services:
       - MYSQL_ROOT_PASSWORD= root
     volumes:
       - ./MySQL:/var/lib/mysql
-  tika:
-    image: apache/tika
-    ports:
-        - "9998:9998"

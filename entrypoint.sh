@@ -5,7 +5,6 @@ python manage.py collectstatic --no-input --settings=PlagiarismDetector.settings
 
 echo 'Applying migrations...'
 python manage.py wait_for_db --settings=PlagiarismDetector.settings.production
-python manage.py wait_for_db --settings=PlagiarismDetector.settings.production
 python manage.py migrate --settings=PlagiarismDetector.settings.production
 
 echo 'Running server...'

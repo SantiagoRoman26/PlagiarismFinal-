@@ -5,8 +5,7 @@ import unicodedata
 from docx.enum.dml import MSO_THEME_COLOR_INDEX
 from docx.shared import Cm
 from nltk import word_tokenize, sent_tokenize
-from tika import parser
-from docx import Document
+import PyPDF2
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
@@ -35,8 +34,13 @@ def obtener_archivo_Test(ruta_completa):
 #cambio
 def convertir_archivo_a_txt(nombre_directorio, archivo):
     archivo_nombre, archivo_extension = os.path.splitext(archivo)
-    raw = parser.from_file(nombre_directorio + archivo)
-    archivo_txt = raw['content']
+    archivo_completo = os.path.join(nombre_directorio, archivo)
+    try:
+        with open(archivo_completo, 'rb') as pdf_file:
+            pdf_reader = PyPDF2.PdfReader(pdf_file)
+            archivo_txt = '\n'.join(page.extract_text() for page in pdf_reader.pages)
+    except Exception as e:
+        archivo_txt = ''  # Manejar el error de lectura de PDF vacío
     return ArchivoTxt(archivo_nombre, archivo_extension, archivo_txt)
 
 
