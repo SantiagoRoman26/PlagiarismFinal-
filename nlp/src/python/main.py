@@ -91,10 +91,10 @@ def main(directorio_archivo):
         #     thread.join()
         # log.info("INFO | FIn del entrenamiento del modelo")
         
-        hilo_tema = threading.Thread(target=obtener_tema_del_texto,
-                                    args=(texto_archivo_test_limpio, sw, int(config["cantidad_de_topicos"]),))
-        hilos_principales.append(hilo_tema)
-        hilo_tema.start()
+        # hilo_tema = threading.Thread(target=obtener_tema_del_texto,
+        #                             args=(texto_archivo_test_limpio, sw, int(config["cantidad_de_topicos"]),))
+        # hilos_principales.append(hilo_tema)
+        # hilo_tema.start()
 
         hilo_plagio_de_otros_tics = threading.Thread(target=obtener_plagio_de_otros_tics,
                                                     args=(texto_archivo_test_sin_oraciones_excluidas, sw, ))
