@@ -105,20 +105,20 @@ def eliminarUsuario(request, usuario_id):
 def modificarUsuario(request, usuario_id):
     user = request.user
     usuario = Usuario.objects.get(correo=user.email)
-    # if user.groups.filter(name = "admin").exists() or usuario.usuario_id = usuario_id:
-    usuario = Usuario.objects.get(usuario_id=usuario_id)
-    if request.method == 'GET':
-        formulario_usuario = FormularioUsuario(instance = usuario)
+    if user.groups.filter(name = "admin").exists():
+        usuario = Usuario.objects.get(usuario_id=usuario_id)
+        if request.method == 'GET':
+            formulario_usuario = FormularioUsuario(instance = usuario)
+        else:
+            formulario_usuario = FormularioUsuario(request.POST, instance = usuario)
+            if formulario_usuario.is_valid():
+                #ORM
+                formulario_usuario.save()
+                messages.success(request, 'Usuario '+ usuario.nombres +' editado')
+            return redirect(index)
+        return render (request, 'usuarios/modificar.html', locals())
     else:
-        formulario_usuario = FormularioUsuario(request.POST, instance = usuario)
-        if formulario_usuario.is_valid():
-            #ORM
-            formulario_usuario.save()
-            messages.success(request, 'Usuario '+ usuario.nombres +' editado')
-        return redirect(index)
-    return render (request, 'usuarios/modificar.html', locals())
-    # else:
-    #     return render(request, 'login/forbidden.html', locals())
+        return render(request, 'login/forbidden.html', locals())
 
 @login_required
 def cambiarRolUsuario(request, usuario_id): 
