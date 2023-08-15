@@ -69,6 +69,9 @@
                     <td>{{ forloop.counter }}</td>
                     <td>{{resultado.management.documento.get_nombre_archivo }}</td>  <!-- ojo -->
                     <td>{{resultado.management.docente.usuario.nombres}} {{resultado.management.docente.usuario.apellidos}}</td>
+                    {% if resultado.ejecutando or resultado.ejecutando == True%}
+                    <td><span style='color:red'>Ejecucion en proceso...</span></td>
+                    {%else%}
                     <td >
                         <a class="btn btn-info"  href="{% url 'revision' resultado.resultado_id  %}"
                             role="button">Revision</a>
@@ -77,6 +80,7 @@
                             role="button">Eliminar</a>
                         {% endif %}
                     </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
