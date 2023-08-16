@@ -1,17 +1,121 @@
 {% extends 'master.html' %}
+{% load static %}
 {% block contenido %}<!--aqui-->
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta>
-    <title>Gestion de documento</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
-</head>
-<h4>Envio al docente</h4>
-<form method="POST"> {% csrf_token %}
-    {{formulario_gestion.as_p}}
-    <button class="btn btn-primary" type="submit">Enviar</button>
-</form>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
+        .titulo {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #000; /* Color negro */
+            font-family: 'Montserrat', sans-serif; /* Tipo de letra Montserrat */
+            text-transform: capitalize; /* Convertir a minúsculas */
+        }
+
+        .formulario {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo para el botón */
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: capitalize; /* Convertir a minúsculas */
+        }
+        .cancelar {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px; /* Agregado para separar los botones */
+            text-decoration: none; /* Quitar el subrayado */
+            text-transform: capitalize; /* Convertir a minúsculas */
+          }
+          
+          .cancelar:hover {
+            background-color: #0056b3;
+          }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo para el label de descripción y correo electrónico */
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        /* Estilo para los campos de descripción y correo electrónico */
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        /* Estilo para la barra de escribir de descripción y correo electrónico */
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+    </style>
+    <title>Envío al Docente</title>
+</head>
+<body>
+    <div class="container">
+        <h4 class="titulo">Envío Docente</h4>
+        <form method="POST" class="formulario">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ formulario_gestion.titulo.id_for_label }}">Título</label>
+                {{ formulario_gestion.titulo }}
+            </div>
+            <div class="form-group">
+                <label for="{{ formulario_gestion.descripcion.id_for_label }}">Descripción</label>
+                <textarea name="{{ formulario_gestion.descripcion.name }}" id="{{ formulario_gestion.descripcion.id_for_label }}" rows="4">{{ formulario_gestion.descripcion.value }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="{{ formulario_gestion.correo.id_for_label }}">Correo Electrónico</label>
+                <input type="email" name="{{ formulario_gestion.correo.name }}" id="{{ formulario_gestion.correo.id_for_label }}" value="{{ formulario_gestion.correo.value }}">
+            </div>
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary" type="submit">cancelar</button>
+        </form>
+    </div>
+</body>
 </html>
+
+
 {% endblock %}<!--aqui-->

@@ -5,19 +5,113 @@
 
 <head>
     <title>Subir Archivo</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/documento/subir.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .file-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .seleccionar-archivo {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .cancelar,
+        .subir {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .cancelar {
+            background-color: #dc3545;
+            margin-right: 10px;
+        }
+
+        .cancelar:hover,
+        .subir:hover,
+        .seleccionar-archivo:hover {
+            background-color: #0056b3;
+        }
+
+        #progress-bar-container {
+            margin-top: 20px;
+            height: 10px;
+            background-color: #f2f2f2;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            height: 100%;
+            background-color: #007bff;
+            width: 0;
+        }
+        #no-file-selected {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+    </style>
 </head>
 
 <body>
     <div class="container">
-        {% if mensaje %}
-        <p>{{ mensaje }}</p>
-        {% endif %}
         <h1>Subir Archivo</h1>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" name="archivo">
-            <input type="submit">
+            <div class="file-input-container">
+                <label for="archivo" class="seleccionar-archivo">Seleccionar Archivo</label>
+                <input type="file" name="archivo" id="archivo" onchange="updateFileName(this)">
+                <span id="file-name"></span>
+                <span id="no-file-selected"></span>
+            </div>
+            <div>
+                <button class="cancelar">Cancelar</button>
+                <button class="subir">Subir Archivo</button>
+            </div>
         </form>
         <div id="progress-bar-container">
             <div id="progress-bar"></div>
@@ -25,6 +119,12 @@
     </div>
 
     <script src="{% static 'js/documento/subi.js' %}"></script>
+    <script>
+        function updateFileName(input) {
+            const fileName = input.files[0]?.name || '';
+            document.getElementById('file-name').textContent = fileName;
+            document.getElementById('no-file-selected').textContent = fileName ? '' : 'No se ha seleccionado ningún archivo.';
+        }
+    </script>
 </body>
-
 </html>

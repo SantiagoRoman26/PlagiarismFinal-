@@ -1,7 +1,96 @@
-<h4>Modificar Usuario</h4>
-<form method="POST" > {% csrf_token %}
-    <div class="form-group row">
-        {{formulario_usuario.as_p}}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Modificar Usuario</title>
+    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 100px auto; /* Ajusta la distancia desde la parte superior */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: capitalize; /* Convertir a minúsculas */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 20px; /* Espacio entre los campos */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h4>Modificar Usuario</h4>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="two-columns">
+                <div class="form-group">
+                    <label>Nombres</label>
+                    <input type="text" name="nombres">
+                </div>
+                <div class="form-group">
+                    <label>Apellidos</label>
+                    <input type="text" name="apellidos">
+                </div>
+                <div class="form-group">
+                    <label>Correo Electrónico</label>
+                    <input type="text" name="correo">
+                </div>
+            </div>
+            <button type="submit">Modificar Usuario</button>
+        </form>
     </div>
-    <button type="submit">Modificar Usuario</button>
-</form>
+</body>
+
+</html>

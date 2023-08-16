@@ -1,28 +1,161 @@
 {% extends 'master.html' %}
 {% load auth_extras %}
 {% block contenido %}<!--aqui-->
-
+<!DOCTYPE html>
 <html>
-
 <head>
-    <meta>
     <title>Usuarios</title>
     <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #f8f9fa;
+        }
+
+        .alert {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+        }
+
+        .container-fluid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h4 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif; /* Tipo de letra Montserrat */
+            text-transform: capitalize; /* Convertir a minúsculas */
+        }
+
+        .form-control {
+            width: 300px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .btn {
+            height: 50px;
+        }
+
+        .btn-primary {
+            background-color: rgb(54, 54, 207);
+            margin-left: 10px;
+        }
+
+        .table {
+            margin-top: 20px;
+            font-size: 14px; /* Tamaño de fuente en la tabla */
+        }
+        /* Estilos para las celdas de encabezado */
+        .table thead th {
+            font-size: 16px; /* Tamaño de fuente */
+            font-weight: bold; /* Texto en negrita */
+            color: #333; /* Color de texto */
+            background-color: #f8f9fa; /* Color de fondo */
+            border-top: none; /* Sin borde superior */
+            border-bottom: 2px solid #007bff; /* Borde inferior */
+            font-family: 'Montserrat', sans-serif; /* Tipo de letra Montserrat */
+            text-transform: capitalize; /* Convertir a minúsculas */
+        }
+        .table thead th:last-child {
+          text-align: center; /* Centrar horizontalmente la última columna (Opciones) */
+      }
+
+
+        /* Estilos para todas las celdas en el cuerpo de la tabla */
+        .table tbody td {
+            vertical-align: middle; /* Centrar verticalmente el contenido */
+            font-size: 14px; /* Tamaño de fuente */
+            color: #333; /* Color de texto */
+            font-family: 'Arial', sans-serif; /* Tipo de letra Arial */
+            border-top: none; /* Sin borde superior */
+            border-bottom: 1px solid #ddd; /* Borde inferior */
+            padding: 12px 15px; /* Espaciado interno de celdas */
+        }
+
+        /* Estilos para la última columna de opciones */
+        .table tbody td:last-child {
+            text-align: center; /* Centrar horizontalmente el contenido */
+        }
+
+        /* Estilos para el cuerpo de la tabla en dispositivos móviles */
+        @media (max-width: 767px) {
+            .table-responsive {
+                overflow-x: auto;
+            }
+
+            .table {
+                width: 100%;
+                margin-bottom: 0;
+                border-collapse: collapse;
+            }
+
+            .table td, .table th {
+                white-space: nowrap;
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+
+        .btn-danger,
+        .btn-info,
+        .custom-btn-danger,
+        .custom-btn-info {
+            background-color: #007bff;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-family: Arial;
+            border: none;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0px 1px 0px 0px #f0f7fa;
+            margin: 10px;
+            cursor: pointer;
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+        .btn-info:hover,
+        .custom-btn-info:hover {
+            background-color: #c82333;
+        }
+        
+    </style>
 </head>
+
 
 <body>
     <nav class="navbar navbar-light bg-light">
         {% if message %}
-            <div class="alert alert-info" style="display: flex; justify-content: center; align-items: center;">
+            <div class="alert alert-info">
                 {{ message }}
             </div>
         {% endif %}
         {% if messages %}
           <ul class="messages">
               {% for message in messages %}
-              <div class="alert alert-info" style="display: flex; justify-content: center; align-items: center;">
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %} style= color:black>{{ message }}</li>
+              <div class="alert alert-info">
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
               </div>
               {% endfor %}
           </ul>
@@ -30,32 +163,31 @@
         <div class="container-fluid">
             <h4>Lista de Usuarios</h4>
             
-            <form class="d-flex" method="POST">{% csrf_token %}
-                <input  class="form-control" name="busqueda" placeholder="Ingrese su Busqueda"
+            <form class="d-flex align-items-center" method="POST">{% csrf_token %}
+                <input class="form-control" name="busqueda" placeholder="Ingrese su Busqueda"
                     aria-label="busqueda">
-                <button style="margin-left: 10px; height: 50px;" class="btn btn-info" type="submit">Buscar</button>
+                <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>
                 {% if cond %}
-                <a style="margin-left: 10px;background-color: rgb(54, 54, 207); height: 50px;" 
-                class="btn btn-primary" href="{% url 'generar_usuario'%}" role="button">Generar Usuario</a>
+                <a class="btn custom-btn-info" href="{% url 'generar_usuario'%}" role="button">Generar Usuario</a>
                 {% endif%}
-                <a style="margin-left: 10px;background-color: rgb(54, 54, 207); height: 50px;" 
-                class="btn btn-primary" href="{% url 'autorizaciones'%}" role="button">Autorizar usuarios</a>
+                <a class="btn custom-btn-info" href="{% url 'autorizaciones'%}" role="button"><i class="fas fa-check"></i></a>
             </form> 
         </div>
     </nav>
 
     <div class="container">
-        <table class="table table-hover">
-            <thead class="thead-light">
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Rol</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
+      <div class="table-responsive">
+          <table class="table table-hover">
+              <thead class="thead-light">
+                  <tr>
+                      <th>Id</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>Correo</th>
+                      <th>Rol</th>
+                      <th>Opciones</th>
+                  </tr>
+              </thead>
             <tbody>
                 {% for usuarios in listaUsuarios%}
                 <tr>
@@ -64,21 +196,20 @@
                     <td>{{usuarios.apellidos}}</td>
                     <td>{{usuarios.correo}}</td>
                     <td>{{usuarios.userU.groups.first}}</td>
-                    <td >
-                        <a class="btn btn-danger" onclick="confirmDeleteAndRedirect('{% url 'eliminar_usuario' usuarios.usuario_id %}')" 
-                            role="button">Eliminar</a>
-                        <a class="btn btn-info"  href="{% url 'modificar_usuario' usuarios.usuario_id %}"
-                            role="button">Editar</a>
-                            <a class="btn btn-info" onclick="confirmRolAndRedirect('{% url 'rol_usuario' usuarios.usuario_id %}')" 
-                            role="button">Cambiar Rol</a>
-                            
+                    <td>
+                      <a class="btn custom-btn-danger" onclick="confirmDeleteAndRedirect('{% url 'eliminar_usuario' usuarios.usuario_id %}')"
+                      role="button"><i class="fas fa-trash"></i></a>
+                  <a class="btn btn-info" href="{% url 'modificar_usuario' usuarios.usuario_id %}"
+                      role="button"><i class="fas fa-edit"></i></a>
+                  <a class="btn custom-btn-info" onclick="confirmRolAndRedirect('{% url 'rol_usuario' usuarios.usuario_id %}')"
+                      role="button"><i class="fas fa-exchange-alt"></i></a>
                     </td>
                 </tr>
-
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    {% include 'footer.html' %}
 </body>
 
 </html>
@@ -115,5 +246,5 @@
         }
       });
     }
-  </script>
+</script>
 {% endblock %}<!--aqui-->
