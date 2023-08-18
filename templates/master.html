@@ -12,13 +12,19 @@
 </head>
 
 <body>
+    <body>
+        <header>
+            {% include "header.html" %}<!-- Contenido del encabezado, como la barra de navegación -->
+        </header>
     
-    {% include "header.html" %}
-    {% block contenido %}
-    {% endblock%}
-    <footer>
-        {% include 'footer.html' %}
-    </footer>
+        <main>
+            {% block contenido %}
+            {% endblock %}
+        </main>
+    
+        <footer>
+            {% include 'footer.html' %}
+        </footer>
+    </body>
 </body>
-
 </html>

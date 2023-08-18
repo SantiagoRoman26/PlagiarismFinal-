@@ -1,3 +1,6 @@
+{% extends 'master.html' %}
+
+{% block contenido %}
 {% load static %}
 {% load auth_extras %}
 
@@ -9,55 +12,70 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/autorizar/seleccionar_rol.css' %} " media="screen">
     <link id="u-theme-google-font" rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0-beta3/css/all.min.css">
 </head>
-
-
-<section class="u-align-center u-clearfix u-custom-color-2 u-section-1" id="sec-7573">
+<style>
+    .u-repeater-item {
+        height: 340px; /* Ajusta la altura de los elementos */
+        max-width: 340px;
+        padding: 10px; /* Ajusta el espacio interno de los elementos */
+        text-align: center; /* Centra el contenido en cada elemento */
+        display: inline-block; /* Cambia el diseño a en línea */
+        margin: -70px 100px 50px 50px; /* Margen superior, derecho, inferior, izquierdo */; 
+    }
+    .u-icon {
+        font-size: 36px; /* Ajusta el tamaño de los iconos según tus preferencias */
+        margin-bottom: 10px; /* Ajusta el espacio entre los iconos y el texto */
+    }
+</style>
+<section class="u-align-center u-clearfix u-custom-color- u-section-1" id="sec-7573">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <h2 class="u-text u-text-default u-text-1">Escoja su Rol </h2>
+        <h7 class="u-text u-text-default u-text-1"style=" color: #000000; font-size: 30px; margin-top: 30px; font-family: Arial, sans-serif;">Elija el nuevo rol</h7>
         <form method="POST">
             {% csrf_token %}
             <div class="u-list u-list-1">
                 <div class="u-repeater u-repeater-1">
                     <div
-                        class="u-align-center u-container-style u-custom-color-3 u-custom-item u-list-item u-repeater-item u-list-item-1">
+                        class="u-align-center u-container-style u-custom-color- u-custom-item u-list-item u-repeater-item u-list-item-1">
                         <div class="u-container-layout u-similar-container u-container-layout-1">
-                            <span class="u-file-icon u-icon u-icon-rounded u-text-white u-icon-1">
-                                <img src="{% static 'images/1719105.png' %}" alt="">
+                            <span class="u-icon u-text-white u-icon-1">
+                                <i class="fas fa-user-graduate"style="margin-top: -50px;color: #000000;"></i>
                             </span>
-                            <h5 class="u-text u-text-default u-text-2">Estudiante</h5>
-                            <p class="u-text u-text-3"> Capaz de realizar los análisis, y enviarlos a un docente
+                            <h5 class="u-text u-text-default u-text-4" style="text-transform: capitalize; color: #000000; font-size: 19px; margin-top: -120px;">Estudiante</h5>
+                            <p class="u-text u-text-3"style="font-size: 14px"> Capaz de realizar los análisis, y enviarlos a un docente
                                 para su
                                 revisión.</p>
                             <button type="submit" onclick="setRolValue('estudiante');"
-                                class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-1"
-                                name="rol" value="estudiante">Seleccionar</button>
+                                class="u-border-none u-btn u-btn-round u-button-style u-custom-color-2 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-1"
+                                name="rol" value="estudiante"style="text-transform: capitalize">Seleccionar</button>
                         </div>
                     </div>
                     <div
-                        class="u-align-center u-container-style u-custom-color-3 u-custom-item u-list-item u-repeater-item">
+                        class="u-align-center u-container-style u-custom-color- u-custom-item u-list-item u-repeater-item">
                         <div class="u-container-layout u-similar-container u-container-layout-2">
-                            <span class="u-file-icon u-icon u-icon-rounded u-text-white u-icon-2">
-                                <img src="{% static 'images/185578-7.png' %}" alt=""></span>
-                            <h5 class="u-text u-text-default u-text-4">Docente</h5>
-                            <p class="u-text u-text-5"> Subir documentos, generar análisis y opciones avanzadas para
+                            <span class="u-icon u-text-white u-icon-2">
+                                <i class="fas fa-chalkboard-teacher"style="margin-top: -50px;color: #000000;"></i>
+                            </span>
+                            <h5 class="u-text u-text-default u-text-4" style="text-transform: capitalize; font-weight: bold; color: #000000; font-size: 19px; margin-top: -130px;">Docente</h5>
+                            <p class="u-text u-text-3"style="font-size: 14px"> Subir documentos, generar análisis y opciones avanzadas para
                                 realizar un
                                 análisis.</p>
                             <button type="submit" onclick="setRolValue('docente');"
-                                class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-2"
-                                name="rol" value="docente">Seleccionar</button>
+                                class="u-border-none u-btn u-btn-round u-button-style u-custom-color-2 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-2"
+                                name="rol" value="docente"style="text-transform: capitalize">Seleccionar</button>
                         </div>
                     </div>
                     <div
-                        class="u-align-center u-container-style u-custom-color-3 u-custom-item u-list-item u-repeater-item">
+                        class="u-align-center u-container-style u-custom-color- u-custom-item u-list-item u-repeater-item">
                         <div class="u-container-layout u-similar-container u-container-layout-2">
-                            <span class="u-file-icon u-icon u-icon-rounded u-text-white u-icon-2">
-                                <img src="{% static 'images/185578-7.png' %}" alt=""></span>
-                            <h5 class="u-text u-text-default u-text-4">Administrador</h5>
-                            <p class="u-text u-text-5"> Administrar opciones de la pagina.</p>
+                            <span class="u-icon u-text-white u-icon-2">
+                                <i class="fas fa-user-cog"style="margin-top: -50px; color: #000000;"></i>
+                            </span>
+                            <h5 class="u-text u-text-default u-text-4" style="text-transform: capitalize; font-weight: bold; color: #000000; font-size: 19px; margin-top: -130px;">Administrador</h5>
+                            <p class="u-text u-text-3"style="font-size: 14px"> Administrar opciones de la página.</p>
                             <button type="submit" onclick="setRolValue('admin');"
-                                class="u-border-none u-btn u-btn-round u-button-style u-custom-color-1 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-2"
-                                name="rol" value="admin">Seleccionar</button>
+                                class="u-border-none u-btn u-btn-round u-button-style u-custom-color-2 u-hover-custom-color-4 u-radius-50 u-text-body-color u-btn-2"
+                                name="rol" value="admin"style="text-transform: capitalize">Seleccionar</button>
                         </div>
                     </div>
                 </div>
@@ -70,3 +88,4 @@
         document.getElementById("id_rol").value = value;
     }
 </script>
+{% endblock %}

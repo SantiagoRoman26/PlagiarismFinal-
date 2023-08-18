@@ -1,23 +1,69 @@
 {% extends 'master.html' %}
 {% load auth_extras %}
-{% block contenido %}<!--aqui-->
-<!DOCTYPE html>
-<html>
+
+{% block contenido %}
+<!-- Tu contenido específico aquí -->
 <head>
-    <title>Usuarios</title>
+    <meta>
     <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
+        /* Estilos para el nuevo encabezado */
+        .header {
             background-color: #f8f9fa;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .header h4 {
+            font-size: 28px;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: capitalize;
+        }
+    
+        .header form {
+            display: flex;
+            align-items: center;
+        }
+    
+        .header .form-control {
+            width: 300px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+    
+        .header .btn {
+            height: 50px;
+            margin-left: 10px;
+        }
+    
+        .header .custom-btn-info {
+            background-color: #007bff;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-family: Arial;
+            border: none;
+            font-weight: bold;
+            border-radius: 6px;
+            box-shadow: 0px 1px 0px 0px #f0f7fa;
+            margin-left: 10px;
+            cursor: pointer;
+            text-align: center;
+            text-transform: capitalize;
+        }
+    
+        .header .custom-btn-info:hover {
+            background-color: #c82333;
         }
 
         .alert {
@@ -134,117 +180,105 @@
             text-align: center;
             text-transform: capitalize;
         }
-
         .btn-info:hover,
         .custom-btn-info:hover {
             background-color: #c82333;
         }
-        
+   
+    
+        .header {
+            margin-bottom: 20px; /* Agrega margen inferior al contenido del header */
+            margin-top: 40px;
+        }  
     </style>
-</head>
-
-
-<body>
-    <nav class="navbar navbar-light bg-light">
-        {% if message %}
-            <div class="alert alert-info">
-                {{ message }}
-            </div>
-        {% endif %}
+    <div class="header"> <!-- Agrega margen superior -->
+        
         {% if messages %}
-          <ul class="messages">
-              {% for message in messages %}
-              <div class="alert alert-info">
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-              </div>
-              {% endfor %}
-          </ul>
-        {% endif %}
-        <div class="container-fluid">
-            <h4>Lista de Usuarios</h4>
-            
-            <form class="d-flex align-items-center" method="POST">{% csrf_token %}
-                <input class="form-control" name="busqueda" placeholder="Ingrese su Busqueda"
-                    aria-label="busqueda">
-                <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>
-                {% if cond %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
+                    <li>{{ message }}</li>
+                </div>
+            {% endfor %}
+        </ul>
+        {% endif %} 
+        <h4>Lista de Usuarios</h4>
+        <form class="d-flex align-items-center" method="POST">{% csrf_token %}
+            <input class="form-control" name="busqueda" placeholder="Ingrese su Busqueda"
+                aria-label="busqueda">
+            <button class="btn btn-info" type="submit"><i class="fas fa-search"></i></button>
+            {% if cond %}
                 <a class="btn custom-btn-info" href="{% url 'generar_usuario'%}" role="button">Generar Usuario</a>
-                {% endif%}
-                <a class="btn custom-btn-info" href="{% url 'autorizaciones'%}" role="button"><i class="fas fa-check"></i></a>
-            </form> 
-        </div>
-    </nav>
-
-    <div class="container">
-      <div class="table-responsive">
-          <table class="table table-hover">
-              <thead class="thead-light">
-                  <tr>
-                      <th>Id</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>
-                      <th>Correo</th>
-                      <th>Rol</th>
-                      <th>Opciones</th>
-                  </tr>
-              </thead>
-            <tbody>
-                {% for usuarios in listaUsuarios%}
-                <tr>
-                    <td>{{usuarios.usuario_id}}</td>
-                    <td>{{usuarios.nombres}}</td>
-                    <td>{{usuarios.apellidos}}</td>
-                    <td>{{usuarios.correo}}</td>
-                    <td>{{usuarios.userU.groups.first}}</td>
-                    <td>
-                      <a class="btn custom-btn-danger" onclick="confirmDeleteAndRedirect('{% url 'eliminar_usuario' usuarios.usuario_id %}')"
-                      role="button"><i class="fas fa-trash"></i></a>
-                  <a class="btn btn-info" href="{% url 'modificar_usuario' usuarios.usuario_id %}"
-                      role="button"><i class="fas fa-edit"></i></a>
-                  <a class="btn custom-btn-info" onclick="confirmRolAndRedirect('{% url 'rol_usuario' usuarios.usuario_id %}')"
-                      role="button"><i class="fas fa-exchange-alt"></i></a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% endif%}
+            <a class="btn custom-btn-info" href="{% url 'autorizaciones'%}" role="button"><i class="fas fa-check"></i></a>
+        </form>
     </div>
-    {% include 'footer.html' %}
-</body>
-
-</html>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Script para personalizar el mensaje de confirmación -->
-<script>
-    function confirmRolAndRedirect(url) {
-      Swal.fire({
-        title: "¿Estás seguro?",
-        text: "Esta acción cambiará el rol del usuario.",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Cambiar Rol",
-        cancelButtonText: "Cancelar"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = url; // Redireccionar si se confirma
+<div class="container">
+          <div class="table-responsive">
+              <table class="table table-hover">
+                  <thead class="thead-light">
+                      <tr>
+                          <th>Id</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Correo</th>
+                          <th>Rol</th>
+                          <th>Opciones</th>
+                      </tr>
+                  </thead>
+                <tbody>
+                    {% for usuarios in listaUsuarios%}
+                    <tr>
+                        <td>{{usuarios.usuario_id}}</td>
+                        <td>{{usuarios.nombres}}</td>
+                        <td>{{usuarios.apellidos}}</td>
+                        <td>{{usuarios.correo}}</td>
+                        <td>{{usuarios.userU.groups.first}}</td>
+                        <td>
+                          <a class="btn custom-btn-danger" onclick="confirmDeleteAndRedirect('{% url 'eliminar_usuario' usuarios.usuario_id %}')"
+                          role="button"><i class="fas fa-trash"></i></a>
+                      <a class="btn btn-info" href="{% url 'modificar_usuario' usuarios.usuario_id %}"
+                          role="button"><i class="fas fa-edit"></i></a>
+                      <a class="btn custom-btn-info" onclick="confirmRolAndRedirect('{% url 'rol_usuario' usuarios.usuario_id %}')"
+                          role="button"><i class="fas fa-exchange-alt"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Script para personalizar el mensaje de confirmación -->
+    <script>
+        function confirmRolAndRedirect(url) {
+          Swal.fire({
+            title: "¿Estás seguro?",
+            text: "Esta acción cambiará el rol del usuario.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Cambiar Rol",
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = url; // Redireccionar si se confirma
+            }
+          });
         }
-      });
-    }
-    function confirmDeleteAndRedirect(url) {
-      Swal.fire({
-        title: "¿Estás seguro, esta accion no se podra revertir?",
-        text: "Esta acción eliminara el usuario registrado.",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonText: "Eliminar usuario",
-        cancelButtonText: "Cancelar"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = url; // Redireccionar si se confirma
+        function confirmDeleteAndRedirect(url) {
+          Swal.fire({
+            title: "¿Estás seguro, esta accion no se podra revertir?",
+            text: "Esta acción eliminara el usuario registrado.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar usuario",
+            cancelButtonText: "Cancelar"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = url; // Redireccionar si se confirma
+            }
+          });
         }
-      });
-    }
-</script>
-{% endblock %}<!--aqui-->
+    </script>
+</div><!-- Cierre del main-container -->
+{% endblock %}

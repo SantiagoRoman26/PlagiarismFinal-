@@ -8,6 +8,7 @@ from django.db.models.deletion import ProtectedError
 from django.db.models import Q 
 from django.urls import reverse
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 def verificarRolAnterior(usuario_id):
     usuario = Usuario.objects.get(usuario_id=usuario_id)
@@ -110,11 +111,29 @@ def modificarUsuario(request, usuario_id):
         if request.method == 'GET':
             formulario_usuario = FormularioUsuario(instance = usuario)
         else:
+            userU = User.objects.get(email = usuario.correo)
             formulario_usuario = FormularioUsuario(request.POST, instance = usuario)
             if formulario_usuario.is_valid():
-                #ORM
+
+                nuevo_correo = request.POST.get('correo')
+                
+                # Verifica si el nuevo correo ya existe en otro usuario
+                
+                # Si el correo no existe en otros usuarios, guarda los cambios
                 formulario_usuario.save()
+                
+                # Actualiza los campos en el objeto User
+                userU.first_name = usuario.nombres
+                userU.last_name = usuario.apellidos
+                userU.email = nuevo_correo
+                userU.save()
                 messages.success(request, 'Usuario '+ usuario.nombres +' editado')
+                # userU.first_name 
+            else:
+                for field_name, error_messages in formulario_usuario.errors.items():
+                    for error_message in error_messages:
+                        messages.error(request, f'Error en el campo {formulario_usuario.fields[field_name].label}: {error_message}')
+                return render (request, 'usuarios/modificar.html', locals())
             return redirect(index)
         return render (request, 'usuarios/modificar.html', locals())
     else:

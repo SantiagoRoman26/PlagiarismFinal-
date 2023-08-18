@@ -1,3 +1,53 @@
-El registro se ha completado. 
-La cuenta esta pendiente de confirmacion 
-Le llegara un correo electronico cuando su cuenta se encuentre activa
+{% extends 'master.html' %}
+{% block contenido %}
+<style>
+    .confirmation-message {
+      width: 300px;
+      padding: 20px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin: 50px auto;
+      text-align: center;
+    }
+
+    .confirmation-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .confirmation-text {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-close-btn {
+      padding: 8px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .confirmation-close-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+<div class="confirmation-message">
+    <h2 class="confirmation-title">El registro se ha completado</h2>
+    <p class="confirmation-text">La cuenta está pendiente de confirmación. Le llegará un correo electrónico cuando su cuenta esté activa.</p>
+    <button class="confirmation-close-btn" onclick="closeConfirmation()">Cerrar</button>
+</div>
+  
+<script>
+    function closeConfirmation() {
+      var confirmationMessage = document.querySelector('.confirmation-message');
+      confirmationMessage.style.display = 'none';
+    }
+</script>
+{% endblock %}

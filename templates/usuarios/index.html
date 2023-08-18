@@ -1,44 +1,135 @@
 {% extends 'master.html' %}
 {% block contenido %}
+<style>
+    .container-fluid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+    }
+    h4 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif; /* Tipo de letra Montserrat */
+        text-transform: capitalize; /* Convertir a minúsculas */
+    }
 
-<head>
-    <meta>
-    <title>Usuarios</title>
-    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
-</head>
+    .table {
+        margin-top: 20px;
+        font-size: 14px; /* Tamaño de fuente en la tabla */
+    }
+    /* Estilos para las celdas de encabezado */
+    .table thead th {
+        font-size: 16px; /* Tamaño de fuente */
+        font-weight: bold; /* Texto en negrita */
+        color: #333; /* Color de texto */
+        background-color: #f8f9fa; /* Color de fondo */
+        border-top: none; /* Sin borde superior */
+        border-bottom: 2px solid #007bff; /* Borde inferior */
+        font-family: 'Montserrat', sans-serif; /* Tipo de letra Montserrat */
+        text-transform: capitalize; /* Convertir a minúsculas */
+    }
+    .table thead th:last-child {
+      text-align: center; /* Centrar horizontalmente la última columna (Opciones) */
+  }
 
-<body>
-    <div class="container">
-        <h4>Lista de Usuarios:</h4>
 
+    /* Estilos para todas las celdas en el cuerpo de la tabla */
+    .table tbody td {
+        vertical-align: middle; /* Centrar verticalmente el contenido */
+        font-size: 14px; /* Tamaño de fuente */
+        color: #333; /* Color de texto */
+        font-family: 'Arial', sans-serif; /* Tipo de letra Arial */
+        border-top: none; /* Sin borde superior */
+        border-bottom: 1px solid #ddd; /* Borde inferior */
+        padding: 12px 15px; /* Espaciado interno de celdas */
+    }
 
-        <table class="table table-hover">
-            <thead class="thead-light">
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Detalles</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for usuarios in listaUsuarios%}
-                {% if not usuarios.estado %}
-                <tr>
-                    <td>{{usuarios.usuario_id}}</td>
-                    <td>{{usuarios.nombres}}</td>
-                    <td>{{usuarios.apellidos}}</td>
-                    <td>{{usuarios.correo}}</td>
-                    <td>
-                    <a class="btn btn-info"  href="{% url 'activar' usuarios.usuario_id %}"
-                                role="button">Autorizar.</a>
-                    </td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-        {% endblock %}
+    /* Estilos para la última columna de opciones */
+    .table tbody td:last-child {
+        text-align: center; /* Centrar horizontalmente el contenido */
+    }
+
+    /* Estilos para el cuerpo de la tabla en dispositivos móviles */
+    @media (max-width: 767px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+            border-collapse: collapse;
+        }
+
+        .table td, .table th {
+            white-space: nowrap;
+            font-size: 12px;
+            padding: 8px;
+        }
+    }
+    th {
+        background-color: #f8f9fa;
+    }
+    /* Estilos para el botón de detalles */
+    .btn {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-transform: capitalize;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+    .title-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .title-container h4 {
+        font-size: 28px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: capitalize;
+        margin: 0;
+        padding: 10px 0;
+    }
+</style>
+<div class="container">
+    <div class="title-container">
+        <h4>Lista de Usuarios</h4>
     </div>
-</body>
+
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuarios in listaUsuarios %}
+            {% if not usuarios.estado %}
+            <tr>
+                <td>{{ usuarios.usuario_id }}</td>
+                <td>{{ usuarios.nombres }}</td>
+                <td>{{ usuarios.apellidos }}</td>
+                <td>{{ usuarios.correo }}</td>
+                <td>
+                    <a class="btn btn-info" href="{% url 'activar' usuarios.usuario_id %}" role="button">Autorizar</a>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

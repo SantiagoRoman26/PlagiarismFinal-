@@ -1,24 +1,10 @@
-
+{% extends 'master.html' %}
+{% block contenido %}
 {% load static %}
-<!DOCTYPE html>
-<html>
 
-<head>
     <title>Subir Archivo</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
+        .container-fluid { 
             max-width: 600px;
             padding: 20px;
             background-color: #fff;
@@ -95,10 +81,7 @@
         }
         
     </style>
-</head>
-
-<body>
-    <div class="container">
+    <div class="container-fluid">
         <h1>Subir Archivo</h1>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -109,7 +92,7 @@
                 <span id="no-file-selected"></span>
             </div>
             <div>
-                <button class="cancelar">Cancelar</button>
+                <button class="cancelar" onclick = "window.location.href='{% url 'homepage'%}'">Cancelar</button>
                 <button class="subir">Subir Archivo</button>
             </div>
         </form>
@@ -126,5 +109,5 @@
             document.getElementById('no-file-selected').textContent = fileName ? '' : 'No se ha seleccionado ningún archivo.';
         }
     </script>
-</body>
-</html>
+    {% endblock %}
+

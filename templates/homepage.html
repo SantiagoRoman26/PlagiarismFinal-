@@ -1,19 +1,7 @@
 {% extends 'master.html' %}
 {% load auth_extras %}
 {% block contenido %}
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Detector de Plagio</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
-        }
-
         .buttonClass {
             background-color: #007bff;
             color: #fff;
@@ -32,12 +20,10 @@
             text-align: center;
             text-transform: capitalize; /* Convertir a minúsculas */
         }
-
         .buttonClass:hover {
             text-decoration: none; /* Quitar el subrayado al pasar el mouse */
             background-color: #0056b3;
         }
-
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -59,6 +45,7 @@
         .card-subtitle,
         .card-text {
             margin: 10px;
+            text-transform: capitalize; /* Convertir a minúsculas */
         }
 
         #mensaje {
@@ -85,9 +72,6 @@
             color: #555;
         }
     </style>
-</head>
-
-<body>
   {% if user.is_authenticated %}
   <div class="center-text">
       <h1 class="header-title">Detector de Plagio</h1>
@@ -150,7 +134,4 @@
     </div>
 
     <p id="mensaje"></p>
-</body>
-
-</html>
-{% endblock %}
+{% endblock %}

@@ -2,39 +2,69 @@
 {% block contenido %}
 {% load static %}
 {% load auth_extras %}
+<style>
+    .document-info {
+        text-align: center;
+        margin-top: 40px;
+    }
 
-<!DOCTYPE html>
-<html>
+    .document-info h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
 
-<head>
-    <title>Analisis</title>
-    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
-</head>
+    .document-info p {
+        font-size: 16px;
+    }
 
-<body>
-    <div class="container">
-        <!-- Cambio si al que se le muestra el resultado es un estudiante entonces, se agrega un boton de enviar a docente -->
-        <!-- Cambio se debe agregar un boton para compartir, este boton no importara si es para un docente o estudiante,
-             en el caso de que se agrege dicho boton, el documento sera publico -->
-        {% if resultado %}
+    .button-container {
+        margin-top: 20px;
+    }
+
+    .button-container .btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-transform: capitalize; /* Convertir a minúsculas */
+        background-color: #007bff;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+        border: none;
+    }
+</style>
+<div class="container">
+    {% if resultado %}
         {% if resultado.estado %}
-        <h1>Documento analizado exitosamente.</h1>
-        <iframe src="{{ resultado.archivo.url }}" width="100%" height="500px"></iframe>
-        <a class="btn btn-info"  href="{% url 'compartir_documento' resultado.resultado_id %}"
-                                role="button">Compartir.</a>
-        <a class="btn btn-info"  href="{% url 'detalle_documento' resultado.resultado_id %}"
-        role="button">Editar Detalles.</a>
+            <div class="document-info">
+                <h1>Documento analizado exitosamente</h1>
+                <iframe src="{{ resultado.archivo.url }}" width="100%" height="500px"></iframe>
+                <div class="button-container">
+                    <a class="btn btn-info" href="{% url 'compartir_documento' resultado.resultado_id %}"
+                       role="button">Compartir</a>
+                    <a class="btn btn-info" href="{% url 'detalle_documento' resultado.resultado_id %}"
+                       role="button">Editar Detalles</a>
+                </div>
+            </div>
         {% else %}
-        <h1>Documento no disponible</h1>
-        <p>No se puede mostrar una previsualización del documento.</p>
+            <div class="document-info">
+                <h1>Documento no disponible</h1>
+                <p>No se puede mostrar una previsualización del documento.</p>
+            </div>
         {% endif %}
-        {% else %}
-        <p>No hay documentos disponibles</p>
-
-        {% endif %}
-    </div>
-
-</body>
-
-</html>
+    {% else %}
+        <div class="document-info">
+            <p>No hay documentos disponibles</p>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

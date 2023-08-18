@@ -1,16 +1,8 @@
 {% extends 'master.html' %}
 {% load static %}
 {% block contenido %}<!--aqui-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-        }
+      
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -91,9 +83,7 @@
             box-sizing: border-box;
         }
     </style>
-    <title>Envío al Docente</title>
-</head>
-<body>
+   
     <div class="container">
         <h4 class="titulo">Envío Docente</h4>
         <form method="POST" class="formulario">
@@ -114,8 +104,4 @@
             <button class="btn btn-primary" type="submit">cancelar</button>
         </form>
     </div>
-</body>
-</html>
-
-
 {% endblock %}<!--aqui-->

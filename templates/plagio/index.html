@@ -1,17 +1,204 @@
 {% extends 'master.html' %}
 {% load auth_extras %}
 {% block contenido %}
-<html>
+
 <head>
     <meta>
     <title>Resultados</title>
     <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
 </head>
-<body>
+<style>
+    /* Estilos para el nuevo encabezado */
+    .header {
+        background-color: #f8f9fa;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .header form {
+        display: flex;
+        align-items: center;
+    }
+
+    .header .form-control {
+        width: 300px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .header .btn {
+        height: 50px;
+        margin-left: 10px;
+    }
+
+    .header .custom-btn-info {
+        background-color: #007bff;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-family: Arial;
+        border: none;
+        font-weight: bold;
+        border-radius: 6px;
+        box-shadow: 0px 1px 0px 0px #f0f7fa;
+        margin-left: 10px;
+        cursor: pointer;
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    .header .custom-btn-info:hover {
+        background-color: #c82333;
+    }
+
+    .alert {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+    }
+
+    .container-fluid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h4 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif; /* Tipo de letra Montserrat */
+        text-transform: capitalize; /* Convertir a minúsculas */
+    }
+
+    .form-control {
+        width: 300px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .btn {
+        height: 50px;
+    }
+
+    .btn-primary {
+        background-color: rgb(54, 54, 207);
+        margin-left: 10px;
+    }
+
+    .table {
+        margin-top: 20px;
+        font-size: 14px; /* Tamaño de fuente en la tabla */
+    }
+    /* Estilos para las celdas de encabezado */
+    .table thead th {
+        font-size: 16px; /* Tamaño de fuente */
+        font-weight: bold; /* Texto en negrita */
+        color: #333; /* Color de texto */
+        background-color: #f8f9fa; /* Color de fondo */
+        border-top: none; /* Sin borde superior */
+        border-bottom: 2px solid #007bff; /* Borde inferior */
+        font-family: 'Montserrat', sans-serif; /* Tipo de letra Montserrat */
+        text-transform: capitalize; /* Convertir a minúsculas */
+    }
+    .table thead th:last-child {
+      text-align: center; /* Centrar horizontalmente la última columna (Opciones) */
+  }
+
+
+    /* Estilos para todas las celdas en el cuerpo de la tabla */
+    .table tbody td {
+        vertical-align: middle; /* Centrar verticalmente el contenido */
+        font-size: 14px; /* Tamaño de fuente */
+        color: #333; /* Color de texto */
+        font-family: 'Arial', sans-serif; /* Tipo de letra Arial */
+        border-top: none; /* Sin borde superior */
+        border-bottom: 1px solid #ddd; /* Borde inferior */
+        padding: 12px 15px; /* Espaciado interno de celdas */
+    }
+
+    /* Estilos para la última columna de opciones */
+    .table tbody td:last-child {
+        text-align: center; /* Centrar horizontalmente el contenido */
+    }
+
+    /* Estilos para el cuerpo de la tabla en dispositivos móviles */
+    @media (max-width: 767px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+            border-collapse: collapse;
+        }
+
+        .table td, .table th {
+            white-space: nowrap;
+            font-size: 12px;
+            padding: 8px;
+        }
+    }
+    th {
+        background-color: #f8f9fa;
+    }
+
+    .btn-danger,
+    .btn-info,
+    .custom-btn-danger,
+    .custom-btn-info {
+        background-color: #007bff;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-family: Arial;
+        border: none;
+        font-weight: bold;
+        border-radius: 6px;
+        box-shadow: 0px 1px 0px 0px #f0f7fa;
+        margin: 10px;
+        cursor: pointer;
+        text-align: center;
+        text-transform: capitalize;
+    }
+    .btn-info:hover,
+    .custom-btn-info:hover {
+        background-color: #c82333;
+    }
+
+
+    .header {
+        margin-bottom: 20px; /* Agrega margen inferior al contenido del header */
+        margin-top: 40px;
+    }
+    .title-container h4 {
+        font-size: 28px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: capitalize;
+        margin: 0;
+        padding: 10px 0;
+    }
+    .execution-message {
+        color: red;
+        font-weight: bold;
+    }
+</style>
     <div class="container">
-        <h4>Lista de resultados:</h4>
-        
+        <div class="title-container">
+            <h4>Lista de resultados</h4>
+        </div>
         <table class="table table-hover">
             {% if cond %}
             <thead class="thead-light">
@@ -88,9 +275,6 @@
         </table>
         
     </div>
-</body>
-
-</html>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -1,56 +1,103 @@
 {% extends 'master.html' %}
 {% block contenido %}
-<!DOCTYPE html>
-<html>
+<style>
+    .container {
+        margin-top: 10px;
+        width: 50%;
+    }
 
-<head>
-    <title>Compartir Documento</title>
-    <!-- Agrega aquí tus estilos CSS -->
-    <!-- Dependencias de Bootstrap (CSS y JavaScript) -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
-<body>
-    <div class="container">
-        <h2>Compartir Documento</h2>
-        <form action="{% url 'compartir_documento' resultado.resultado_id %}" method="post" id="formulario-compartir">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="correo">Correo electrónico:</label>
-                <input type="email" class="form-control" name="correo" required>
-                <button type="button" class="btn btn-sm btn-primary" id="agregar-correo">+</button>
-            </div>
+    .card-body {
+        padding: 20px;
+    }
 
-            <!-- Espacio para mostrar campos de correo adicionales -->
-            <div id="campos-correo-adicionales"></div>
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+    }
+    .form-group label {
+        font-size: 15px;
+        color: #808080;
+        font-weight: bold;
+    }
 
-            <div class="form-group">
-                <label for="comentario">Comentario:</label>
-                <textarea class="form-control" name="comentario" rows="4"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Compartir</button>
-        </form>
+    .form-control {
+        border-radius: 5px;
+        width: 90%;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-transform: capitalize;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    #campos-correo-adicionales {
+        margin-top: 10px;
+    }
+    .card-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+        text-transform: capitalize;
+    }
+</style>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Compartir Documento</h2>
+            <form action="{% url 'compartir_documento' resultado.resultado_id %}" method="post" id="formulario-compartir">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" class="form-control" name="correo" required>
+                    <button type="button" class="btn btn-sm btn-primary" id="agregar-correo">+</button>
+                </div>
+
+                <!-- Espacio para mostrar campos de correo adicionales -->
+                <div id="campos-correo-adicionales"></div>
+
+                <div class="form-group">
+                    <label for="comentario">Comentario</label>
+                    <textarea class="form-control" name="comentario" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Compartir</button>
+            </form>
+        </div>
     </div>
+</div>
 
-    <!-- Agrega aquí tus scripts JavaScript si los necesitas -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Manejador del botón "+"
-            $("#agregar-correo").click(function () {
-                var campoCorreo = '<div class="form-group">';
-                campoCorreo += '<label for="correo">Correo electrónico:</label>';
-                campoCorreo += '<input type="email" class="form-control" name="correo" required>';
-                campoCorreo += '</div>';
+<!-- Agrega aquí tus scripts JavaScript si los necesitas -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Manejador del botón "+"
+        $("#agregar-correo").click(function () {
+            var campoCorreo = '<div class="form-group">';
+            campoCorreo += '<label for="correo">Correo electrónico:</label>';
+            campoCorreo += '<input type="email" class="form-control" name="correo" required>';
+            campoCorreo += '</div>';
 
-                // Agregar el campo de correo al formulario
-                $("#campos-correo-adicionales").append(campoCorreo);
-            });
+            // Agregar el campo de correo al formulario
+            $("#campos-correo-adicionales").append(campoCorreo);
         });
-    </script>
-    <!-- Dependencias de Bootstrap (JavaScript) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>
-{% endblock%}
+    });
+</script>
+<!-- Dependencias de Bootstrap (JavaScript) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

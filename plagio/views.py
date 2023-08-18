@@ -95,11 +95,12 @@ def index(request):
             for gestion in listaGestion:
                 try:
                     print(gestion.gestion_id)
-                    resultado = Resultado.objects.get(management=gestion)
+                    resultado = Resultado.objects.get(management= gestion)
                     
                     listaResultado.append(resultado)
                     if gestion.estudiante:
                         cond = True
+                    
                 except Resultado.DoesNotExist:
                      print("el resultado esta procesandose, o no existe en la base de datos")
         elif user.groups.filter(name = "estudiante").exists():
@@ -119,6 +120,7 @@ def index(request):
                      print("el resultado esta procesandose, o no existe en la base de datos")
             pass
         # busqueda = request.POST.get("busqueda")
+        print("¨listaresultado = ",listaResultado.count)
         return render (request, 'plagio/index.html', locals())
     return render(request, 'homepage.html')
 

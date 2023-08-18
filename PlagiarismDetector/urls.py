@@ -31,7 +31,8 @@ urlpatterns = [
     path('plagio/',include('plagio.urls')),
     path('autorizar/',include('autorizar.urls')),
     path('asignacion/',include('gestionDocumentos.urls')),
-
+    
+    path('prueba/', views.prueba, name='prueba'),
     path('login/', include('login.urls')),
     path('about/', views.about, name='about'),
     path('', views.index, name='homepage'),
