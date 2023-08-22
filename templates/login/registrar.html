@@ -138,7 +138,7 @@
           font-size: 14px;
       }
 
-      .styled-input {
+      .styled-input-container {
           padding: 8px;
       }
 
@@ -167,31 +167,33 @@
           <div class="alert alert-error"></div>
           <div class="input-field">
             <label class="input-label" for="{{ wizard.form.first_name.id_for_label }}"><i class="fas fa-user"></i> Nombre</label>
-            <input type="text" name="{{ wizard.form.first_name.name }}" id="{{ wizard.form.first_name.id_for_label }}" class="styled-input" required>
+            <span class="styled-input-container">{{wizard.form.first_name}}</span>
             {{ wizard.form.first_name.errors }}
           </div>
           <div class="input-field">
             <label class="input-label" for="{{ wizard.form.last_name.id_for_label }}"><i class="fas fa-user"></i> Apellido</label>
-            <input type="text" name="{{ wizard.form.last_name.name }}" id="{{ wizard.form.last_name.id_for_label }}" class="styled-input" required>
+            <span class="styled-input-container">
+              {{ wizard.form.last_name }}
+          </span>
             {{ wizard.form.last_name.errors }}
           </div>
           <div class="input-field">
             <label class="input-label" for="{{ wizard.form.username.id_for_label }}"><i class="fas fa-user"></i> Usuario</label>
-            <input type="text" name="{{ wizard.form.username.name }}" id="{{ wizard.form.username.id_for_label }}" class="styled-input" required>
+            <span class="styled-input-container">{{wizard.form.username}}</span>
             {% if wizard.form.username.errors %}
               <span class="error-message">{{ wizard.form.username.errors }}</span>
             {% endif %}
           </div>
           <div class="input-field">
             <label class="input-label" for="{{ wizard.form.email.id_for_label }}"><i class="fas fa-envelope"></i> Email</label>
-            <input type="email" name="{{ wizard.form.email.name }}" id="{{ wizard.form.email.id_for_label }}" class="styled-input" required>
+            <span class="styled-input-container">{{wizard.form.email}}</span>
             {% if wizard.form.email.errors %}
               <span class="error-message">{{ wizard.form.email.errors }}</span>
             {% endif %}
           </div>
           <div class="input-field">
             <label class="input-label" for="{{ wizard.form.password.id_for_label }}"><i class="fas fa-lock"></i> Contraseña</label>
-            <input type="password" name="{{ wizard.form.password.name }}" id="{{ wizard.form.password.id_for_label }}" class="styled-input" required>
+            <span class="styled-input-container">{{wizard.form.password}}</span>
             {% if wizard.form.password.errors %}
               <span class="error-message">{{ wizard.form.password.errors }}</span>
             {% endif %}

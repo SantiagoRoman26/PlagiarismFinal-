@@ -124,7 +124,9 @@ class RegistrarWizardView(SessionWizardView):
         return [TEMPLATES[self.steps.current]]
     
     def done(self, form_list, **kwargs):
+        print("aqui")
         formulario_registro_data = self.get_cleaned_data_for_step("registro")
+        print("Datos limpios del formulario de registro:", formulario_registro_data)
         formulario_rol_data = self.get_cleaned_data_for_step("rol")
         # Procesar formulario de registro
         usuario = formulario_registro_data['username']
