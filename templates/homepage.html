@@ -86,28 +86,6 @@
   </div>
   {% endif %}
     <div class="container">
-        <div class="card card_hotel">
-            <div class="car-body">
-                <h5 class="card-title">Resultados</h5>
-                <h6 class="card-subtitle">Revisar Resultados</h6>
-                <p class="card-text">Ver los resultados generados</p>
-            </div>
-            <div>
-                <a href="/plagio" class="buttonClass">Resultados</a>
-            </div>
-        </div>
-
-        <div class="card card_hotel">
-            <div class="car-body">
-                <h5 class="card-title">Documentos</h5>
-                <h6 class="card-subtitle">Gestión de documentos</h6>
-                <p class="card-text">Subir un nuevo documento</p>
-            </div>
-            <div>
-                <a href="/documento/upload" class="buttonClass">Documentos</a>
-            </div>
-        </div>
-
         {% if request.user|has_group:"admin" %}
         <div class="card card_hotel">
             <div class="car-body">
@@ -130,8 +108,29 @@
                 <a href="/usuario" class="buttonClass">Usuario</a>
             </div>
         </div>
-        {% endif %}
-    </div>
+        {% else %}
+        <div class="card card_hotel">
+            <div class="car-body">
+                <h5 class="card-title">Resultados</h5>
+                <h6 class="card-subtitle">Revisar Resultados</h6>
+                <p class="card-text">Ver los resultados generados</p>
+            </div>
+            <div>
+                <a href="/plagio" class="buttonClass">Resultados</a>
+            </div>
+        </div>
 
-    <p id="mensaje"></p>
-{% endblock %}
+        <div class="card card_hotel">
+            <div class="car-body">
+                <h5 class="card-title">Documentos</h5>
+                <h6 class="card-subtitle">Gestión de documentos</h6>
+                <p class="card-text">Subir un nuevo documento</p>
+            </div>
+            <div>
+                <a href="/documento/upload" class="buttonClass">Documentos</a>
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+{% endblock %}
