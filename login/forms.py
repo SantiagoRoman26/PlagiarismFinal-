@@ -24,7 +24,7 @@ class FormularioRegistrar(forms.Form):
         return email
 
     def clean(self):
-        print(self.cleaned_data)  # Agrega esta línea para depurar
+        
         password_validation.validate_password(self.cleaned_data.get('password'), None)
         return self.cleaned_data
 class FormularioRol(forms.Form):

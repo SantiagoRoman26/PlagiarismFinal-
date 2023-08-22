@@ -93,15 +93,22 @@
                 {{ formulario_gestion.titulo }}
             </div>
             <div class="form-group">
-                <label for="{{ formulario_gestion.descripcion.id_for_label }}">Descripción</label>
-                <textarea name="{{ formulario_gestion.descripcion.name }}" id="{{ formulario_gestion.descripcion.id_for_label }}" rows="4">{{ formulario_gestion.descripcion.value }}</textarea>
+                <label for="{{ formulario_gestion.comentario.id_for_label }}">Descripción</label>
+                <textarea name="{{ formulario_gestion.comentario.name }}" id="{{ formulario_gestion.comentario.id_for_label }}" rows="4">{{ formulario_gestion.comentario }}</textarea>
             </div>
             <div class="form-group">
-                <label for="{{ formulario_gestion.correo.id_for_label }}">Correo Electrónico</label>
-                <input type="email" name="{{ formulario_gestion.correo.name }}" id="{{ formulario_gestion.correo.id_for_label }}" value="{{ formulario_gestion.correo.value }}">
+                <label for="{{ formulario_gestion.email.id_for_label }}">Correo Electrónico</label>
+                {{ formulario_gestion.email }}
             </div>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
             <button class="btn btn-primary" type="submit">Enviar</button>
-            <button class="btn btn-primary" type="submit">cancelar</button>
+            <button class="btn btn-primary" type="submit" formnovalidate>Cancelar</button>
         </form>
     </div>
 {% endblock %}<!--aqui-->

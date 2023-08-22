@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from modelo.models import Documento, Usuario, GestionDocumentos, Estudiante, Docente
 from django.contrib.auth.decorators import login_required
 from .forms import FormularioGestion
-from django.http import JsonResponse
+from django.contrib import messages
 
 # Create your views here.
 @login_required
@@ -14,6 +14,7 @@ def gestionEstudiante (request,gestion_id):
     if usuario_global.estado:
         formulario_gestion = FormularioGestion(request.POST)
         if request.method == 'POST':
+            print("Datos limpios del formulario de gestion:", formulario_gestion)
             if formulario_gestion.is_valid():
                 datos_gestion = formulario_gestion.cleaned_data
                 #verificar que el email del docente exista
@@ -42,7 +43,9 @@ def gestionEstudiante (request,gestion_id):
                         return HttpResponseRedirect(reverse('homepage'))
                 else:
                     return HttpResponseRedirect(reverse('homepage'))
-                
+            else:
+                messages.error(request, 'Corrige los errores.')
+            print("no valido")    
             return render(request, 'gestion/gestionEstudiante.html',locals())
         
         return render(request, 'gestion/gestionEstudiante.html',locals())

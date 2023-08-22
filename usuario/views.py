@@ -66,6 +66,7 @@ def autorizaciones(request):
 @login_required
 def eliminarUsuario(request, usuario_id):
     user = request.user
+    usuario = Usuario.objects.get(usuario_id=usuario_id)
     if user.groups.filter(name = "admin").exists():
         try:
             rolAnterior,idRol = verificarRolAnterior(usuario_id)
