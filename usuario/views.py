@@ -22,7 +22,7 @@ def verificarRolAnterior(usuario_id):
     elif user.groups.filter(name = "admin").exists():
         return 3, None
     else:
-        pass
+        return 0, None
 
 @login_required
 def index(request):
@@ -74,8 +74,8 @@ def eliminarUsuario(request, usuario_id):
             if rolAnterior == 2:
                 docente_grupo=Group.objects.get(name='docente')
                 docente = Docente.objects.get(docente_id = idRol)
-                user.groups.remove(docente_grupo)
                 docente.delete()
+                user.groups.remove(docente_grupo)
             elif rolAnterior == 3:
                 user.is_staff = False
                 user.is_superuser = False
@@ -86,7 +86,8 @@ def eliminarUsuario(request, usuario_id):
                 estudiante_grupo=Group.objects.get(name='estudiante')
                 user.groups.remove(estudiante_grupo)
                 estudiante.delete()
-                
+            else :
+                messages.error(request, 'Usuario '+ usuario.nombres +' no tiene un rol anterior, por ende no se puede eliminar correctamente')
             usuario = Usuario.objects.get(usuario_id=usuario_id)
             messages.success(request, 'Usuario '+ usuario.nombres +' eliminado')
             user.delete()
@@ -149,83 +150,85 @@ def cambiarRolUsuario(request, usuario_id):
         formulario_rol = FormularioRol(request.POST)
         if request.method == 'POST':
             if formulario_rol.is_valid():
-                formulario_rol_data = formulario_rol.cleaned_data
-                rol = formulario_rol_data['rol']
-                rolAnterior,idRol = verificarRolAnterior(usuario.usuario_id)
-                if rol == 'estudiante' and rolAnterior !=1:
-                    if rolAnterior == 2:
-                        try:
-                            docente = Docente.objects.get(docente_id = idRol)
-                            docente.delete()
-                            estudiante = Estudiante()
-                            estudiante.usuario = usuario
-                            estudiante.save()
-                            docente_grupo=Group.objects.get(name='docente')
-                            user.groups.remove(docente_grupo)
-                        except ProtectedError as e:
-                            # Manejo del error
-                            registros_asociados = e.protected_objects
-                            message = f"No se puede eliminar el Docente debido a registros asociados en GestionDocumentos: {registros_asociados}"
-                            url = reverse('usuarios') + f'?message={message}'
-                            return redirect(url)
-                    elif rolAnterior == 3:
-                        user.is_staff = False
-                        user.is_superuser = False
-                        admin_grupo=Group.objects.get(name='admin')
-                        user.groups.remove(admin_grupo)
-                    nuevo_grupo = Group.objects.get(name='estudiante')
-                    user.groups.add(nuevo_grupo)
-                elif rol == 'docente' and rolAnterior !=2:
-                    if rolAnterior == 1:
-                        estudiante = Estudiante.objects.get(estudiante_id = idRol)
-                        estudiante.delete()
-                        docente = Docente()
-                        docente.usuario = usuario
-                        docente.save()
-                        estudiante_grupo=Group.objects.get(name='estudiante')
-                        user.groups.remove(estudiante_grupo)
-                        
-                    elif rolAnterior == 3:
-                        user.is_staff = False
-                        user.is_superuser = False
-                        admin_grupo=Group.objects.get(name='admin')
-                        user.groups.remove(admin_grupo)
-                    nuevo_grupo = Group.objects.get(name='docente')
-                    user.groups.add(nuevo_grupo)
-                elif rol == 'admin' and rolAnterior !=3:
-                    if rolAnterior == 1:
-                        estudiante = Estudiante.objects.get(estudiante_id = idRol)
-                        estudiante.delete()
-                        docente = Docente()
-                        docente.usuario = usuario
-                        docente.save()
-                        estudiante_grupo=Group.objects.get(name='estudiante')
-                        user.groups.remove(estudiante_grupo)
-                    elif rolAnterior == 2:
-                        try:
-                            docente = Docente.objects.get(docente_id = idRol)
-                            docente.delete()
-                            estudiante = Estudiante()
-                            estudiante.usuario = usuario
-                            estudiante.save()
-                            docente_grupo=Group.objects.get(name='docente')
-                            user.groups.remove(docente_grupo)
-                        except ProtectedError as e:
-                            # Manejo del error
-                            registros_asociados = e.protected_objects
-                            message = f"No se puede eliminar el Docente debido a registros asociados en GestionDocumentos: {registros_asociados}"
-                            url = reverse('usuarios') + f'?message={message}'
-                            return redirect(url)
-                    nuevo_grupo = Group.objects.get(name='admin')
-                    user.groups.add(nuevo_grupo)
-                else:
-                    print("error al usar el boton o de rol repetido")
-                    message=("error rol repetido.")
+                #AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                    formulario_rol_data = formulario_rol.cleaned_data
+                    rol = formulario_rol_data['rol']
+                    rolAnterior,idRol = verificarRolAnterior(usuario.usuario_id)
+                    if rol == 'estudiante' and rolAnterior !=1:
+                        if rolAnterior == 2:
+                            try:
+                                docente = Docente.objects.get(docente_id = idRol)
+                                docente.delete()
+                                estudiante = Estudiante()
+                                estudiante.usuario = usuario
+                                estudiante.save()
+                                docente_grupo=Group.objects.get(name='docente')
+                                user.groups.remove(docente_grupo)
+                            except ProtectedError as e:
+                                # Manejo del error
+                                registros_asociados = e.protected_objects
+                                message = f"No se puede eliminar el Docente debido a registros asociados en GestionDocumentos: {registros_asociados}"
+                                url = reverse('usuarios') + f'?message={message}'
+                                return redirect(url)
+                        elif rolAnterior == 3:
+                            user.is_staff = False
+                            user.is_superuser = False
+                            admin_grupo=Group.objects.get(name='admin')
+                            user.groups.remove(admin_grupo)
+                        nuevo_grupo = Group.objects.get(name='estudiante')
+                        user.groups.add(nuevo_grupo)
+                    elif rol == 'docente' and rolAnterior !=2:
+                        if rolAnterior == 1:
+                            estudiante = Estudiante.objects.get(estudiante_id = idRol)
+                            estudiante.delete()
+                            docente = Docente()
+                            docente.usuario = usuario
+                            docente.save()
+                            estudiante_grupo=Group.objects.get(name='estudiante')
+                            user.groups.remove(estudiante_grupo)
+                            
+                        elif rolAnterior == 3:
+                            user.is_staff = False
+                            user.is_superuser = False
+                            admin_grupo=Group.objects.get(name='admin')
+                            user.groups.remove(admin_grupo)
+                        nuevo_grupo = Group.objects.get(name='docente')
+                        user.groups.add(nuevo_grupo)
+                    elif rol == 'admin' and rolAnterior !=3:
+                        if rolAnterior == 1:
+                            estudiante = Estudiante.objects.get(estudiante_id = idRol)
+                            estudiante.delete()
+                            docente = Docente()
+                            docente.usuario = usuario
+                            docente.save()
+                            estudiante_grupo=Group.objects.get(name='estudiante')
+                            user.groups.remove(estudiante_grupo)
+                        elif rolAnterior == 2:
+                            try:
+                                docente = Docente.objects.get(docente_id = idRol)
+                                docente.delete()
+                                estudiante = Estudiante()
+                                estudiante.usuario = usuario
+                                estudiante.save()
+                                docente_grupo=Group.objects.get(name='docente')
+                                user.groups.remove(docente_grupo)
+                            except ProtectedError as e:
+                                # Manejo del error
+                                registros_asociados = e.protected_objects
+                                message = f"No se puede eliminar el Docente debido a registros asociados en GestionDocumentos: {registros_asociados}"
+                                url = reverse('usuarios') + f'?message={message}'
+                                return redirect(url)
+                        nuevo_grupo = Group.objects.get(name='admin')
+                        user.groups.add(nuevo_grupo)
+                    else:
+                        print("error al usar el boton o de rol repetido")
+                        message=("error rol repetido.")
+                        url = reverse('usuarios') + f'?message={message}'
+                        return redirect(url)
+                    message=("rol cambiado con exito")
                     url = reverse('usuarios') + f'?message={message}'
                     return redirect(url)
-                message=("rol cambiado con exito")
-                url = reverse('usuarios') + f'?message={message}'
-                return redirect(url)
+            #AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
             message=("error en el formulario")
             url = reverse('usuarios') + f'?message={message}'
             return redirect(url)

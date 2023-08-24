@@ -228,21 +228,23 @@
                   </thead>
                 <tbody>
                     {% for usuarios in listaUsuarios%}
-                    <tr>
-                        <td>{{usuarios.usuario_id}}</td>
-                        <td>{{usuarios.nombres}}</td>
-                        <td>{{usuarios.apellidos}}</td>
-                        <td>{{usuarios.correo}}</td>
-                        <td>{{usuarios.userU.groups.first}}</td>
-                        <td>
-                          <a class="btn custom-btn-danger" onclick="confirmDeleteAndRedirect('{% url 'eliminar_usuario' usuarios.usuario_id %}')"
-                          role="button"><i class="fas fa-trash"></i></a>
-                      <a class="btn btn-info" href="{% url 'modificar_usuario' usuarios.usuario_id %}"
-                          role="button"><i class="fas fa-edit"></i></a>
-                      <a class="btn custom-btn-info" onclick="confirmRolAndRedirect('{% url 'rol_usuario' usuarios.usuario_id %}')"
-                          role="button"><i class="fas fa-exchange-alt"></i></a>
-                        </td>
-                    </tr>
+                        {% if usuarios.userU.groups.first != None  %} 
+                            <tr>
+                                <td>{{usuarios.usuario_id}}</td>
+                                <td>{{usuarios.nombres}}</td>
+                                <td>{{usuarios.apellidos}}</td>
+                                <td>{{usuarios.correo}}</td>
+                                <td>{{usuarios.userU.groups.first}}</td>
+                                <td>
+                                <a class="btn custom-btn-danger" onclick="confirmDeleteAndRedirect('{% url 'eliminar_usuario' usuarios.usuario_id %}')"
+                                role="button"><i class="fas fa-trash"></i></a>
+                            <a class="btn btn-info" href="{% url 'modificar_usuario' usuarios.usuario_id %}"
+                                role="button"><i class="fas fa-edit"></i></a>
+                            <a class="btn custom-btn-info" onclick="confirmRolAndRedirect('{% url 'rol_usuario' usuarios.usuario_id %}')"
+                                role="button"><i class="fas fa-exchange-alt"></i></a>
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>

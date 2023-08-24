@@ -181,18 +181,13 @@ def add_hyperlink(paragraph, text, url):
 #     nombre ='Plagio ' + str(str(nombre_archivo).split(".")[0]) + '.pdf'
 #     return nombre_archivo_pdf, nombre
 
-def guardar_resultado(nombre_archivo, topico_con_mas_score, plagio, tiempo_que_tardo, porcentaje_de_plagio, path_resultado, path_referencia):
+def guardar_resultado(nombre_archivo, plagio, tiempo_que_tardo, porcentaje_de_plagio, path_resultado, path_referencia):
     # Crear el contenido del PDF
     pdf_content = []
 
     # Agregar el título y subtítulo al PDF
     pdf_content.append(Paragraph(f'Análisis de plagio sobre:\n', getSampleStyleSheet().get('Heading1')))
     pdf_content.append(Paragraph(nombre_archivo, getSampleStyleSheet().get('Title')))
-    pdf_content.append(Spacer(1, 12))  # Espacio en blanco entre párrafos
-
-    # Agregar los tópicos del texto al PDF
-    pdf_content.append(Paragraph('Tópicos del texto:', getSampleStyleSheet().get('Heading2')))
-    pdf_content.append(Paragraph(", ".join(topico_con_mas_score), getSampleStyleSheet().get('Normal')))
     pdf_content.append(Spacer(1, 12))  # Espacio en blanco entre párrafos
 
     # Agregar información del análisis de plagio al PDF
