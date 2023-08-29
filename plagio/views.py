@@ -120,7 +120,6 @@ def index(request):
                      print("el resultado esta procesandose, o no existe en la base de datos")
             pass
         # busqueda = request.POST.get("busqueda")
-        print("¨listaresultado = ",listaResultado.count)
         return render (request, 'plagio/index.html', locals())
     return render(request, 'homepage.html')
 
