@@ -68,3 +68,15 @@ def preparar_oracion(oracion, sw):
         return None
     else:
         return oracion_mas_preparada.lower()
+    
+def limpiarCache():
+    archivos_referencia_limpios.clear()
+    porcentajes_de_aparicion_otros_tics.clear()
+    porcentajes_de_aparicion_internet.clear()
+    nombre_alumno.clear()
+    titulo.clear()
+    topico_con_mas_score.clear()
+    topicos_referencia.clear()
+    plagio_de_otros_tics.clear()
+    plagio_de_internet.clear()
+    textos_preparados_referencia.clear()

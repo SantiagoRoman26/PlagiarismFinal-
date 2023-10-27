@@ -120,4 +120,41 @@ def visualizar_archivo(request, gestion_id):
     
     # documento = Documento.objects.get(documento_id = gestion.documento_id)
     
+@login_required
+def index(request):
+    user = request.user
+    usuario = Usuario.objects.get(correo=user.email)
+    if usuario.estado:
+        message = request.GET.get('message')
+        if (user.groups.filter(name = "docente").exists()):
+            docente = Docente.objects.get(usuario = usuario)
+            listaGestion = GestionDocumentos.objects.filter(docente = docente)
+            listaDocumentos = []
+            for gestion in listaGestion:
+                listaDocumentos.append(gestion.documento)
+            #return render (request, 'usuarios/index_Todos.html', locals())
+        elif (user.groups.filter(name = "estudiante").exists()):
+            estudiante = Estudiante.objects.get(usuario = usuario)
+            listaGestion = GestionDocumentos.objects.filter(estudiante = estudiante)
+            for gestion in listaGestion:
+                listaDocumentos.append(gestion.documento)
+            #return render (request, 'usuarios/index_Todos.html', locals())
+    return render(request, 'homepage.html')
+
+@login_required
+def eliminarDocumento(request, documento_id):
+    user = request.user
+    if user.groups.filter(name = "docente").exists() :
+        try:
+            documento = Documento.objects.get(documento_id = documento_id)
+            gestion = GestionDocumentos.objects.filter(documento=documento)
+            documento.delete()
+            gestion.delete()
+            return redirect(index)
+        except Exception  as e:
+            print("error")
+            return redirect(index)
+            
+    else:
+        return render(request, 'login/forbidden.html', locals())
     

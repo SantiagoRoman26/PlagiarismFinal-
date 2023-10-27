@@ -96,11 +96,9 @@ def index(request):
                 try:
                     print(gestion.gestion_id)
                     resultado = Resultado.objects.get(management= gestion)
-                    
                     listaResultado.append(resultado)
                     if gestion.estudiante:
                         cond = True
-                    
                 except Resultado.DoesNotExist:
                      print("el resultado esta procesandose, o no existe en la base de datos")
         elif user.groups.filter(name = "estudiante").exists():

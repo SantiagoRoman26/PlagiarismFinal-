@@ -15,6 +15,7 @@ from .redes_neuronales import generar_modelo_entrenado
 
 # def main():
 def main(directorio_archivo):
+    limpiarCache()
     log.info("Iniciando detector de plagio ...")
     tiempo_inicial = time.time()
     # Obtener la ruta absoluta del archivo config.yml
@@ -62,10 +63,10 @@ def main(directorio_archivo):
         
         
 
-        # hilo_plagio_de_internet = threading.Thread(target=obtener_plagio_de_internet,
-        #                                           args=(texto_archivo_test_sin_oraciones_excluidas, sw, int(config["cantidad_de_links"]), bool(config["buscar_en_pdfs"]),))
-        # hilos_principales.append(hilo_plagio_de_internet)
-        # hilo_plagio_de_internet.start()
+        hilo_plagio_de_internet = threading.Thread(target=obtener_plagio_de_internet,
+                                                  args=(texto_archivo_test_sin_oraciones_excluidas, sw, int(config["cantidad_de_links"]), bool(config["buscar_en_pdfs"]),))
+        hilos_principales.append(hilo_plagio_de_internet)
+        hilo_plagio_de_internet.start()
 
         for index, thread in enumerate(hilos_limpieza_archivos_referencia):
             thread.join()
