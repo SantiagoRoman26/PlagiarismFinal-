@@ -21,11 +21,16 @@ class ArchivoTxt:
         self.texto = texto
 
 
-def obtener_archivos(nombre_directorio):
+def obtener_archivos(nombre_directorio, lista_archivos_adicionales=[]):
     archivos = os.listdir(nombre_directorio)
-    print("nombre_directorio =",nombre_directorio)
-    print(archivos)
-    return [convertir_archivo_a_txt(nombre_directorio, archivo) for archivo in archivos]
+    # print("nombre_directorio =",nombre_directorio)
+    # print(archivos)
+    archivos_txt = [convertir_archivo_a_txt(nombre_directorio, archivo) for archivo in archivos]
+    for archivo_adicional in lista_archivos_adicionales:
+        archivo_txt = convertir_archivo_a_txt(archivo_adicional)
+        archivos_txt.append(archivo_txt)
+    
+    return archivos_txt
 
 def obtener_archivo_Test(ruta_completa):
     directorio, nombre_archivo = os.path.split(ruta_completa)
@@ -199,7 +204,7 @@ def guardar_resultado(nombre_archivo, plagio, tiempo_que_tardo, porcentaje_de_pl
     # Crear una lista con los datos de plagio para la tabla
     data = [['Oración plagiada', 'Oración original', 'Lugar donde se encontró', 'Ubicación']]
     for oracion, plagioE, porcentaje, url, ubicacion in plagio:
-        print("algo aqui")
+        # print("algo aqui")
         data.append([Paragraph(oracion, getSampleStyleSheet().get('Normal')),
                      Paragraph(plagioE, getSampleStyleSheet().get('Normal')),
                      Paragraph(url, getSampleStyleSheet().get('Normal')),

@@ -22,7 +22,7 @@ def obtener_oracion_mas_parecida_del_dataset(oracion, oracion_preparada, archivo
             # numero = calcular_similitud(".".join(archivo_test_txt), ".".join(archivo.texto))
             numero = obtener_similitud(".".join(archivo_test_txt), ".".join(archivo.texto))
             if  numero > 0.8: #mayor
-                print("numero= "+ str(numero))
+                # print("numero= "+ str(numero))
 
                 for oracion_a_comparar in archivo.texto:
                     oracion_a_comparar_preparada = preparar_oracion(oracion_a_comparar, sw)

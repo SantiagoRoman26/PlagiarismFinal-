@@ -1,0 +1,284 @@
+{% extends 'master.html' %}
+{% load auth_extras %}
+
+{% block contenido %}
+<!-- Tu contenido específico aquí -->
+
+<head>
+    <meta>
+    <link href="https://bootswatch.com/4/lux/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<style>
+    /* Estilos para el nuevo encabezado */
+    .header {
+        background-color: #f8f9fa;
+        padding: 10px 0;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header h4 {
+        font-size: 28px;
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: capitalize;
+    }
+
+    .header form {
+        display: flex;
+        align-items: center;
+    }
+
+    .header .form-control {
+        width: 300px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .header .btn {
+        height: 50px;
+        margin-left: 10px;
+    }
+
+    .header .custom-btn-info {
+        background-color: #007bff;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-family: Arial;
+        border: none;
+        font-weight: bold;
+        border-radius: 6px;
+        box-shadow: 0px 1px 0px 0px #f0f7fa;
+        margin-left: 10px;
+        cursor: pointer;
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    .header .custom-btn-info:hover {
+        background-color: #c82333;
+    }
+
+    .alert {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+    }
+
+    .container-fluid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h4 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+        /* Tipo de letra Montserrat */
+        text-transform: capitalize;
+        /* Convertir a minúsculas */
+    }
+
+    .form-control {
+        width: 300px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .btn {
+        height: 50px;
+    }
+
+    .btn-primary {
+        background-color: rgb(54, 54, 207);
+        margin-left: 10px;
+    }
+
+    .table {
+        margin-top: 20px;
+        font-size: 14px;
+        /* Tamaño de fuente en la tabla */
+    }
+
+    /* Estilos para las celdas de encabezado */
+    .table thead th {
+        font-size: 16px;
+        /* Tamaño de fuente */
+        font-weight: bold;
+        /* Texto en negrita */
+        color: #333;
+        /* Color de texto */
+        background-color: #f8f9fa;
+        /* Color de fondo */
+        border-top: none;
+        /* Sin borde superior */
+        border-bottom: 2px solid #007bff;
+        /* Borde inferior */
+        font-family: 'Montserrat', sans-serif;
+        /* Tipo de letra Montserrat */
+        text-transform: capitalize;
+        /* Convertir a minúsculas */
+    }
+
+    .table thead th:last-child {
+        text-align: center;
+        /* Centrar horizontalmente la última columna (Opciones) */
+    }
+
+
+    /* Estilos para todas las celdas en el cuerpo de la tabla */
+    .table tbody td {
+        vertical-align: middle;
+        /* Centrar verticalmente el contenido */
+        font-size: 14px;
+        /* Tamaño de fuente */
+        color: #333;
+        /* Color de texto */
+        font-family: 'Arial', sans-serif;
+        /* Tipo de letra Arial */
+        border-top: none;
+        /* Sin borde superior */
+        border-bottom: 1px solid #ddd;
+        /* Borde inferior */
+        padding: 12px 15px;
+        /* Espaciado interno de celdas */
+    }
+
+    /* Estilos para la última columna de opciones */
+    .table tbody td:last-child {
+        text-align: center;
+        /* Centrar horizontalmente el contenido */
+    }
+
+    /* Estilos para el cuerpo de la tabla en dispositivos móviles */
+    @media (max-width: 767px) {
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+            border-collapse: collapse;
+        }
+
+        .table td,
+        .table th {
+            white-space: nowrap;
+            font-size: 12px;
+            padding: 8px;
+        }
+    }
+
+    th {
+        background-color: #f8f9fa;
+    }
+
+    .btn-danger,
+    .btn-info,
+    .custom-btn-danger,
+    .custom-btn-info {
+        background-color: #007bff;
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-family: Arial;
+        border: none;
+        font-weight: bold;
+        border-radius: 6px;
+        box-shadow: 0px 1px 0px 0px #f0f7fa;
+        margin: 10px;
+        cursor: pointer;
+        text-align: center;
+        text-transform: capitalize;
+    }
+
+    .btn-info:hover,
+    .custom-btn-info:hover {
+        background-color: #c82333;
+    }
+
+
+    .header {
+        margin-bottom: 20px;
+        /* Agrega margen inferior al contenido del header */
+        margin-top: 40px;
+    }
+</style>
+<div class="header"> <!-- Agrega margen superior -->
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div
+            class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
+            <li>{{ message }}</li>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h4>Lista de Documentos</h4>
+</div>
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th>Numero</th>
+                    <th>Nombre</th>
+                    <th>Analizado</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for documentos in listaDocumentos%}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{documentos.nombre}}</td>
+                    <td>{{documentos.analizado}}</td>
+                    <td>
+                        <a class="btn custom-btn-danger"
+                            onclick="confirmDeleteAndRedirect('{% url 'eliminar_documento' documentos.documento_id %}')"
+                            role="button"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-info" href="{% url 'visualizar_archivo' documentos.documento_id %}"
+                            role="button"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Script para personalizar el mensaje de confirmación -->
+    <script>
+        function confirmDeleteAndRedirect(url) {
+            Swal.fire({
+                title: "¿Estás seguro.? Esta accion no se podra revertir",
+                text: "Esta acción eliminara el documento registrado.",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonText: "Eliminar documento",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = url; // Redireccionar si se confirma
+                }
+            });
+        }
+    </script>
+</div><!-- Cierre del main-container -->
+{% endblock %}

@@ -76,6 +76,6 @@ def obtener_temas_de_textos_referencia( textos_preparados_referencia,archivos_re
         indice, score= sorted(modelo_lda[diccionario.doc2bow(archivo.texto)], key=lambda tup: -1 * tup[1])[0]
         topicos=[palabra.split("*")[1].replace("\"", "") for palabra in modelo_lda.print_topic(indice, cantidad_de_topicos).split(" + ")]
         i = i + 1 
-        print("el documento " + archivo.nombre + archivo.extension + f" contiene los siguientes topicos: {topicos}")
+        # print("el documento " + archivo.nombre + archivo.extension + f" contiene los siguientes topicos: {topicos}")
         topicos_referencia.append(topicos)
 

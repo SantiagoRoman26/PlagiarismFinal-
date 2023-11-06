@@ -122,23 +122,33 @@ def visualizar_archivo(request, gestion_id):
     
 @login_required
 def index(request):
+    
     user = request.user
     usuario = Usuario.objects.get(correo=user.email)
+    listaDocumentos = []
     if usuario.estado:
         message = request.GET.get('message')
         if (user.groups.filter(name = "docente").exists()):
             docente = Docente.objects.get(usuario = usuario)
             listaGestion = GestionDocumentos.objects.filter(docente = docente)
-            listaDocumentos = []
+            
             for gestion in listaGestion:
-                listaDocumentos.append(gestion.documento)
-            #return render (request, 'usuarios/index_Todos.html', locals())
+                cond = False
+                try:
+                    resultado = Resultado.objects.get(management= gestion)
+                    cond = True
+                except Resultado.DoesNotExist:
+                     print("el resultado esta procesandose, o no existe en la base de datos")
+                     cond = False
+                documento_dict = {**gestion.documento.__dict__, 'analizado': cond, 'nombre': gestion.documento.get_nombre_archivo}
+                listaDocumentos.append(documento_dict)
+            return render (request, 'documento/index.html', locals())
         elif (user.groups.filter(name = "estudiante").exists()):
             estudiante = Estudiante.objects.get(usuario = usuario)
             listaGestion = GestionDocumentos.objects.filter(estudiante = estudiante)
             for gestion in listaGestion:
                 listaDocumentos.append(gestion.documento)
-            #return render (request, 'usuarios/index_Todos.html', locals())
+            return render (request, 'documento/index.html', locals())
     return render(request, 'homepage.html')
 
 @login_required

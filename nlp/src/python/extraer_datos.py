@@ -50,6 +50,6 @@ def obtener_titulo_y_autor(oraciones_limpias):
     titulo = match_titulo.group(1).strip() if match_titulo else None
     autor = match_autor.group(1).strip() if match_autor else None
 
-    print("TITULO",titulo)
-    print("AUTOR",autor)
+    # print("TITULO",titulo)
+    # print("AUTOR",autor)
     return titulo, autor

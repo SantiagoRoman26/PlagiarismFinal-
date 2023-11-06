@@ -14,7 +14,7 @@ from .redes_neuronales import generar_modelo_entrenado
 
 
 # def main():
-def main(directorio_archivo):
+def main(directorio_archivo, lista_archivos_adicionales=[]):
     limpiarCache()
     log.info("Iniciando detector de plagio ...")
     tiempo_inicial = time.time()
@@ -22,12 +22,12 @@ def main(directorio_archivo):
     config_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "config.yml"))
     # generar la ruta base
     base_dir = os.path.dirname(config_file_path)
-    print('base dir =',base_dir)
+    # print('base dir =',base_dir)
     with open(config_file_path, "r") as ymlfile:
         config = yaml.load(ymlfile, Loader=yaml.FullLoader)
     log.warning("INFO | Obteniendo documentos de la carpeta.")
-    print(os.path.join(base_dir,config["path_archivos_referencia"]))
-    archivos_referencia = obtener_archivos(os.path.join(base_dir,config["path_archivos_referencia"]))
+    # print(os.path.join(base_dir,config["path_archivos_referencia"]))
+    archivos_referencia = obtener_archivos(os.path.join(base_dir,config["path_archivos_referencia"]), lista_archivos_adicionales)
     if not archivos_referencia:
         log.warning("No se encontraron archivos en la carpeta referencia, solo se buscara plagio de Internet")
     log.warning("INFO | Fin de generar los documentos de la carpeta.")
@@ -39,7 +39,7 @@ def main(directorio_archivo):
         log.info("Analizando plagio en: " + nombre_archivo)
         texto_archivo_test_limpio = limpieza(archivo_test.texto)
         obtener_titulo(archivo_test.texto)
-        print(texto_archivo_test_limpio)
+        # print(texto_archivo_test_limpio)
         #print(f"oraciones limpias: {texto_archivo_test_limpio}")
         texto_archivo_test_sin_oraciones_excluidas = [oracion for oracion in texto_archivo_test_limpio if not excluida(oracion,base_dir+'/')]
 
@@ -53,20 +53,15 @@ def main(directorio_archivo):
                 hilos_limpieza_archivos_referencia.append(hilo_limpieza_archivos)
                 hilo_limpieza_archivos.start()
 
+        hilos_red_nuronal = list() #nuevo 
         hilos_principales = list()
 
-        hilo_nombre_alumno = threading.Thread(target=obtener_nombre_alumno, args=(texto_archivo_test_limpio, sw,))
-        hilos_principales.append(hilo_nombre_alumno)
-        hilo_nombre_alumno.start()
-        
-        hilos_red_nuronal = list() #nuevo 
-        
+        # hilo_nombre_alumno = threading.Thread(target=obtener_nombre_alumno, args=(texto_archivo_test_limpio, sw,))
+        # hilos_principales.append(hilo_nombre_alumno)
+        # hilo_nombre_alumno.start()
         
 
-        hilo_plagio_de_internet = threading.Thread(target=obtener_plagio_de_internet,
-                                                  args=(texto_archivo_test_sin_oraciones_excluidas, sw, int(config["cantidad_de_links"]), bool(config["buscar_en_pdfs"]),))
-        hilos_principales.append(hilo_plagio_de_internet)
-        hilo_plagio_de_internet.start()
+        
 
         for index, thread in enumerate(hilos_limpieza_archivos_referencia):
             thread.join()
@@ -101,6 +96,11 @@ def main(directorio_archivo):
                                                     args=(texto_archivo_test_sin_oraciones_excluidas, sw, ))
         hilos_principales.append(hilo_plagio_de_otros_tics)
         hilo_plagio_de_otros_tics.start()
+
+        hilo_plagio_de_internet = threading.Thread(target=obtener_plagio_de_internet,
+                                                  args=(texto_archivo_test_sin_oraciones_excluidas, sw, int(config["cantidad_de_links"]), bool(config["buscar_en_pdfs"]),))
+        hilos_principales.append(hilo_plagio_de_internet)
+        hilo_plagio_de_internet.start()
 
         for index, thread in enumerate(hilos_principales):
             thread.join()
@@ -150,7 +150,7 @@ def main(directorio_archivo):
         log.warning(documento_generado)
         log.info(f"Porcentaje de plagio: {porcentaje_de_plagio} %")
         log.info(f'Resultado guardado en: {os.path.abspath(os.path.join(base_dir,config["path_resultado"]))}\\Plagio {str(str(nombre_archivo).split(".")[0])}.docx')
-        print ('nombre alumno ', nombre_alumno)
+        # print ('nombre alumno ', nombre_alumno)
         return documento_generado, nombre, plagio, informacion
     else:
         log.error("No se encontro ningun archivo para verificar plagio")
