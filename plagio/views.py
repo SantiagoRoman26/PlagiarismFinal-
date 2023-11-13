@@ -63,7 +63,8 @@ def obtener_documentos(user):
         for gestion in listaGestion:
             try:
                 resultado = Resultado.objects.get(management= gestion)
-                listaDocumentos.append(gestion.documento.get_nombre_archivo)
+                if resultado.ejecutando == False:
+                    listaDocumentos.append(gestion.documento.archivo.path)
             except Resultado.DoesNotExist:
                     print("el resultado esta procesandose, o no existe en la base de datos")
             
@@ -73,7 +74,7 @@ def obtener_documentos(user):
         for gestion in listaGestion:
             try:
                 resultado = Resultado.objects.get(management = gestion)
-                listaDocumentos.append(gestion.documento.get_nombre_archivo)
+                listaDocumentos.append(gestion.documento.archivo.path)
             except Resultado.DoesNotExist:
                 print("el resultado esta procesandose, o no existe en la base de datos")
             
@@ -181,7 +182,7 @@ def detalleDocumento(request, resultado_id):
         for oracion, plagio, porcentaje, url, ubicacion in plagio:
             listaOracion.append(oracion)
             listaPlagio.append(plagio)
-            listaPorcentaje.append(porcentaje)
+            listaPorcentaje.append((porcentaje)*100)
             listaUrl.append(url)
             listaUbicacion.append(ubicacion)
         

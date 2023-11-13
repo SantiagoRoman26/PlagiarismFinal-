@@ -32,7 +32,7 @@
                 <tr id="fila-{{ forloop.counter0 }}">
                     <td>{{ fila.0 }}</td>
                     <td>{{ fila.1 }}</td>
-                    <td>{{ fila.2 }}</td>
+                    <td>{{ fila.2|floatformat:2 }}%</td>
                     <td>{{ fila.3 }}</td>
                     <td>{{ fila.4 }}</td>
                     <td>
@@ -66,11 +66,10 @@
         window.addEventListener('DOMContentLoaded', (event) => {
             // Calcular el porcentaje de plagio inicial
             const numFilas = document.querySelectorAll('tbody tr').length;
-            //const porcentajePlagio = calcularPorcentajePlagioPromedio(numFilas);
             const porcentajePlagio = (numFilas / numOraciones) * 100;
 
             // Actualizar el texto del elemento con el porcentaje de plagio inicial
-            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio: ${porcentajePlagio}%`;
+            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio: ${porcentajePlagio.toFixed(2)}%`;
             //document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio promedio: ${porcentajePlagio.toFixed(2)}%`;
         });
 
@@ -86,7 +85,7 @@
 
             // Calcular el promedio
             const numFilasVisibles = filasVisibles.length;
-            const porcentajePromedioPlagio = (totalPlagio / numFilasVisibles)*100;
+            const porcentajePromedioPlagio = (numFilas / numOraciones)*100;
 
             return porcentajePromedioPlagio;
         }
@@ -128,7 +127,7 @@
             const porcentajePlagio = calcularPorcentajePlagioPromedio(numFilas);
 
             // Actualizar el texto del elemento con el porcentaje de plagio inicial
-            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio: ${porcentajePlagio}%`;
+            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio: ${porcentajePlagio.toFixed(2)}%`;
             // Ocultar botones de confirmar y descartar
             document.getElementById('btn-confirmar').style.display = 'none';
             document.getElementById('btn-descartar').style.display = 'none';
@@ -151,7 +150,7 @@
             const porcentajePlagio = (numFilas / numOraciones ) * 100;
 
             // Actualizar el texto del elemento con el nuevo porcentaje de plagio
-            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio: ${porcentajePlagio}%`;
+            document.getElementById('porcentaje-plagio').textContent = `Porcentaje de plagio: ${porcentajePlagio.toFixed(2)}%`;
 
             // Mostrar los botones de confirmar y descartar cambios
             document.getElementById('btn-confirmar').style.display = '';

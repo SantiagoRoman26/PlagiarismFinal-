@@ -26,9 +26,10 @@ def obtener_archivos(nombre_directorio, lista_archivos_adicionales=[]):
     # print("nombre_directorio =",nombre_directorio)
     # print(archivos)
     archivos_txt = [convertir_archivo_a_txt(nombre_directorio, archivo) for archivo in archivos]
-    for archivo_adicional in lista_archivos_adicionales:
-        archivo_txt = convertir_archivo_a_txt(archivo_adicional)
-        archivos_txt.append(archivo_txt)
+    if lista_archivos_adicionales:
+        for archivo_adicional in lista_archivos_adicionales:
+            archivo_txt = convertir_archivo_adicional_a_txt(archivo_adicional)
+            archivos_txt.append(archivo_txt)
     
     return archivos_txt
 
@@ -48,6 +49,17 @@ def convertir_archivo_a_txt(nombre_directorio, archivo):
         archivo_txt = ''  # Manejar el error de lectura de PDF vacío
     return ArchivoTxt(archivo_nombre, archivo_extension, archivo_txt)
 
+def convertir_archivo_adicional_a_txt(path):
+    nombre_directorio, archivo = os.path.split(path)
+    archivo_nombre, archivo_extension = os.path.splitext(archivo)
+    archivo_completo = os.path.join(nombre_directorio, archivo)
+    try:
+        with open(archivo_completo, 'rb') as pdf_file:
+            pdf_reader = PyPDF2.PdfReader(pdf_file)
+            archivo_txt = '\n'.join(page.extract_text() for page in pdf_reader.pages)
+    except Exception as e:
+        archivo_txt = ''  # Manejar el error de lectura de PDF vacío
+    return ArchivoTxt(archivo_nombre, archivo_extension, archivo_txt)
 
 def limpieza(archivo):
     archivo_limpio = re.sub(r'\n+', '\n', archivo.strip())

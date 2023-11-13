@@ -253,8 +253,7 @@
                         <a class="btn custom-btn-danger"
                             onclick="confirmDeleteAndRedirect('{% url 'eliminar_documento' documentos.documento_id %}')"
                             role="button"><i class="fas fa-trash"></i></a>
-                        <a class="btn btn-info" href="{% url 'visualizar_archivo' documentos.documento_id %}"
-                            role="button"><i class="fas fa-edit"></i></a>
+                        
                     </td>
                 </tr>
                 {% endfor %}
