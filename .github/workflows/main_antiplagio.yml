@@ -29,6 +29,8 @@ jobs:
       
       - name: Install dependencies
         run: |
+          pip install --upgrade pip
+          pip install cython
           pip install wheel
           pip install -r requirements.txt
         
