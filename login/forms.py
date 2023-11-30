@@ -28,28 +28,32 @@ class FormularioRegistrar(forms.Form):
         return email
     
     def clean(self):
-        
-        password = self.cleaned_data['password']
-        print("password:", password)
-        # Usar los validadores propios de Django
-        password_validation.validate_password(password, None)
+        cleaned_data = super().clean()
 
-        # Ejecutar el nuevo validador
-        print("entra nuevo validador")
+        password = cleaned_data['password']
+
+        # Validate password using Django's password validators
+        try:
+            password_validation.validate_password(password, None)
+        except ValidationError as e:
+            self.add_error('password', e.messages[0])
+
+        # Validate password using custom validators
         errors = {}
-
         if not re.search(r'[0-9]', password):
-            errors['password'] = _('The password must contain at least one number.')
+            errors['password'] = _('La contraseña debe contener almenos un número.')
 
         if not re.search(r'[a-zA-Z]', password):
-            errors['password'] = _('The password must contain at least one letter.')
+            errors['password'] = _('La contraseña debe contener almenos una letra.')
 
         if not re.search(r'[~!@#$%^&*()_+-=\/\[\]{}|;:,<.>?"]', password):
-            errors['password'] = _('The password must contain at least one special character.')
+            errors['password'] = [_('La contraseña debe contener almenos un caracter especial.')]
 
         if errors:
-            raise ValidationError(errors)
-        return password
+            for field, error in errors.items():
+                self.add_error(field, error)
+
+        return cleaned_data
 
 class FormularioRol(forms.Form):
     rol = forms.ChoiceField(choices=[('estudiante', 'Estudiante'), ('docente', 'Docente')], widget=forms.HiddenInput)

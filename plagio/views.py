@@ -229,7 +229,7 @@ def eliminar_filas(request, resultado_id):
         print("porcentaje_de_plagio = ", porcentaje_de_plagio)
         informacion['porcentaje_de_plagio'] = porcentaje_de_plagio
         print("resultado.archivo.path = ",resultado.archivo.path)
-        documento_generado, nombre= main.regenerarResultado(informacion['nombre_archivo'],informacion['topico_con_mas_score'],plagio_actualizado,informacion['tiempo_que_tardo'],informacion['porcentaje_de_plagio'],informacion['path_resultado'],informacion['path_referencia'],resultado.archivo.path)
+        documento_generado, nombre= main.regenerarResultado(informacion['nombre_archivo'],plagio_actualizado,informacion['tiempo_que_tardo'],informacion['porcentaje_de_plagio'],informacion['path_resultado'],informacion['path_referencia'],resultado.archivo.path)
         resultado.plagio = plagio_actualizado
         with open(documento_generado, 'rb') as archivo:
             archivo_django = ContentFile(archivo.read(), name=nombre)
