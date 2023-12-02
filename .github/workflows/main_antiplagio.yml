@@ -27,18 +27,31 @@ jobs:
           python -m venv venv
           source venv/bin/activate
       
-      - name: Install Cython
+      - name: updates
         run: |
-          pip install cython
-          pip install --upgrade setuptools
-          pip install --upgrade wheel
+          apt-get update
+          apt-get install -y sudo
+
+      - name: Agregar librerias
+        run: |
+          sudo apt update
+          sudo apt install -y --force-yes libblas-dev liblapack-dev libblas3 libgfortran5 liblapack3
+          pip install --upgrade pip 
+
+      - name: Instalar Java
+        run: apt-get install -y default-jre
 
       - name: Install dependencies
         run: |
           pip install --upgrade pip
           pip install wheel
           pip install PyYAML
-          pip install -r requirements.txt
+          pip3 install -r requirements.txt
+
+      - name: Instalaciones finales
+        run: |
+          python -m nltk.downloader punkt
+          python -m nltk.downloader stopwords
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
