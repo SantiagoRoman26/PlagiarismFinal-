@@ -28,7 +28,10 @@ jobs:
           source venv/bin/activate
       
       - name: Install Cython
-        run: pip install cython
+        run: |
+          pip install cython
+          pip install --upgrade setuptools
+          pip install --upgrade wheel
 
       - name: Install dependencies
         run: |
