@@ -40,8 +40,10 @@ def gestionEstudiante (request,gestion_id):
                         #return render(request, 'gestion/exito.html',locals())
                         return HttpResponseRedirect(reverse('detectar', args=[listaGestion.gestion_id]))
                     else:
+                        messages.error(request, 'Correo ingresado no pertenence a un docente.')
                         return HttpResponseRedirect(reverse('homepage'))
                 else:
+                    messages.error(request, 'Correo ingresado no existe o no esta registrado.')
                     return HttpResponseRedirect(reverse('homepage'))
             else:
                 messages.error(request, 'Corrige los errores.')

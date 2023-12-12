@@ -216,20 +216,18 @@ def eliminar_filas(request, resultado_id):
         # Eliminar las filas seleccionadas de la matriz plagio
         plagio_actualizado = [fila for i, fila in enumerate(plagio) if i not in map(int, filas_eliminadas)]
         print("plagio actualizado cantidad",len(plagio_actualizado))
+        num_oraciones = resultado.informacion['total_oraciones']
         # Actualizar el campo plagio del objeto resultado
         
-
         informacion = resultado.informacion
         # porcentaje_de_plagio = (len(plagio_actualizado) / resultado.informacion['total_oraciones']) * 100
         porcentaje_de_plagio = 0
-        for oracion, plagio, porcentaje, url, ubicacion in plagio_actualizado:
-            porcentaje_de_plagio += porcentaje
-        porcentaje_de_plagio = (porcentaje_de_plagio / len(plagio)) *100
+        porcentaje_de_plagio = (len(plagio_actualizado) / num_oraciones) *100
         
         print("porcentaje_de_plagio = ", porcentaje_de_plagio)
         informacion['porcentaje_de_plagio'] = porcentaje_de_plagio
         print("resultado.archivo.path = ",resultado.archivo.path)
-        documento_generado, nombre= main.regenerarResultado(informacion['nombre_archivo'],plagio_actualizado,informacion['tiempo_que_tardo'],informacion['porcentaje_de_plagio'],informacion['path_resultado'],informacion['path_referencia'],resultado.archivo.path)
+        documento_generado, nombre= main.regenerarResultado(informacion['nombre_archivo'] , plagio_actualizado , informacion['tiempo_que_tardo'] , informacion['porcentaje_de_plagio'] , informacion['path_resultado'] , informacion['path_referencia'] , resultado.archivo.path)
         resultado.plagio = plagio_actualizado
         with open(documento_generado, 'rb') as archivo:
             archivo_django = ContentFile(archivo.read(), name=nombre)

@@ -1,2 +1,48 @@
-Forbidden<br>
-lo siento usted no tiene permisos
+{% extends 'master.html' %}
+
+{% block contenido %}
+<style>
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #eee;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+p {
+    font-size: 1.2em;
+}
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permission Denied</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Lo siento usted no tiene permisos para ver esta pagina.</h1>
+        <p>Porfavor contactese con el administrador.</p>
+    </div>
+</body>
+</html>
+
+{% endblock %}

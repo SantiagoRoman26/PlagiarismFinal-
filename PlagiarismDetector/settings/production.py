@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [ '*' ]
 
 CORS_ALLOW_ALL_ORIGINS=True
 
-CSRF_TRUSTED_ORIGINS = [ 'https://plagiarismfinal-production.up.railway.app/*']
+CSRF_TRUSTED_ORIGINS = [ 'https://antiplagiodocker.azurewebsites.net/*']
 
 
 # Database

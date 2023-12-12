@@ -199,6 +199,13 @@
             {% endif %}
             {{ wizard.form.password.help_text }}
           </div>
+          <div class="input-field">
+            <label class="input-label" for="{{ wizard.form.email.id_for_label }}"><i class="fas fa-lock"></i> Confirmar contraseña</label>
+            <span class="styled-input-container">{{wizard.form.confirm_password}}</span>
+            {% if wizard.form.confirm_password.errors %}
+              <span class="error-message">{{ wizard.form.confirm_password.errors }}</span>
+            {% endif %}
+          </div>
           <input type="submit" class="btn btn-primary btn-block" value="{% translate "Continuar" %}">
         {% else %}
           <p>else</p>

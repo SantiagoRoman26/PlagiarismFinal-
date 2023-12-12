@@ -240,7 +240,9 @@
                     <th>Numero</th>
                     <th>Nombre</th>
                     <th>Analizado</th>
+                    {% if request.user|has_group:"docente" %}
                     <th>Opciones</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -249,12 +251,14 @@
                     <td>{{ forloop.counter }}</td>
                     <td>{{documentos.nombre}}</td>
                     <td>{{documentos.analizado}}</td>
+                    {% if request.user|has_group:"docente" %}
                     <td>
                         <a class="btn custom-btn-danger"
                             onclick="confirmDeleteAndRedirect('{% url 'eliminar_documento' documentos.documento_id %}')"
                             role="button"><i class="fas fa-trash"></i></a>
                         
                     </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

@@ -1,1 +1,63 @@
-Lo siento usted es un usuario desactivado, por favor acerquese 
+{% extends 'master.html' %}
+
+{% block contenido %}
+<style>
+    body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #eee;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+a {
+    display: block;
+    margin-top: 1em;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #222;
+}
+
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Deactivated</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Sorry, your account is deactivated.</h1>
+        <p>Please contact the administrator to reactivate your account.</p>
+        <!-- <a href="mailto:admin@example.com">Contact Administrator</a> -->
+    </div>
+</body>
+</html>
+
+{% endblock %}

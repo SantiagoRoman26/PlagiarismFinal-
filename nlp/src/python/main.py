@@ -156,9 +156,9 @@ def main(directorio_archivo, lista_archivos_adicionales=[]):
         log.error("No se encontro ningun archivo para verificar plagio")
         log.error("Cerrando detector de plagio...")
 
-def regenerarResultado(nombre_archivo,  topico_con_mas_score, plagio, tiempo_que_tardo, porcentaje_de_plagio, path_resultado, path_referencia, nombre_documento_anterior):
+def regenerarResultado(nombre_archivo, plagio, tiempo_que_tardo, porcentaje_de_plagio, path_resultado, path_referencia, nombre_documento_anterior):
     os.remove(nombre_documento_anterior)
-    documento_generado,nombre = guardar_resultado(nombre_archivo,  topico_con_mas_score, plagio, tiempo_que_tardo, porcentaje_de_plagio, path_resultado, path_referencia)
+    documento_generado,nombre = guardar_resultado(nombre_archivo, plagio, tiempo_que_tardo, porcentaje_de_plagio, path_resultado, path_referencia)
     return documento_generado, nombre
 
 
