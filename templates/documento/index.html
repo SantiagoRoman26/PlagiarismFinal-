@@ -217,9 +217,20 @@
         /* Agrega margen inferior al contenido del header */
         margin-top: 40px;
     }
+    #boton-regresar {
+        background-color: #f1f1f1;
+        color: black;
+            border: none;
+            padding: 5px 15px;
+            font-size: 17px;
+            cursor: pointer;
+            border-radius: 45%;
+        }
+
+        #boton-regresar:hover {
+            background-color: #898989;
 </style>
 <div class="header"> <!-- Agrega margen superior -->
-
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -232,6 +243,7 @@
     {% endif %}
     <h4>Lista de Documentos</h4>
 </div>
+<button id="boton-regresar" onclick="goBack()"> < Regresar</button>
 <div class="container">
     <div class="table-responsive">
         <table class="table table-hover">
@@ -252,12 +264,17 @@
                     <td>{{documentos.nombre}}</td>
                     <td>{{documentos.analizado}}</td>
                     {% if request.user|has_group:"docente" %}
+                        {% if resultado.ejecutando or resultado.ejecutando == True%}
+                        <td><span style='color:red'>Ejecucion en proceso...</span></td>
+                    {%else%}
                     <td>
                         <a class="btn custom-btn-danger"
                             onclick="confirmDeleteAndRedirect('{% url 'eliminar_documento' documentos.documento_id %}')"
                             role="button"><i class="fas fa-trash"></i></a>
                         
                     </td>
+                    {% endif %}
+                    
                     {% endif %}
                 </tr>
                 {% endfor %}
@@ -281,6 +298,10 @@
                     window.location.href = url; // Redireccionar si se confirma
                 }
             });
+        }
+        function goBack() {
+            // Utilizamos la función history.back() para regresar a la página anterior
+            window.history.back();
         }
     </script>
 </div><!-- Cierre del main-container -->

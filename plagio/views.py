@@ -105,7 +105,6 @@ def index(request):
             listaResultado = []
             for gestion in listaGestion:
                 try:
-                    print(gestion.gestion_id)
                     if gestion.docente is not None:
                         resultado = Resultado.objects.get(management=gestion)
                         listaResultado.append(resultado)

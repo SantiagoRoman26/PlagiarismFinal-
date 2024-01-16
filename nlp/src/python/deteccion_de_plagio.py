@@ -66,6 +66,7 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
     ubicacion_dentro_de_la_lista = 0
 
     mutex.acquire()
+    #aqui
     for url in search(oracion_preparada, tld="com.ar", num=cantidad_de_links, stop=cantidad_de_links, pause=2):
         time.sleep(0.002)
         mutex.release()

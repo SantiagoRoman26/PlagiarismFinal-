@@ -194,11 +194,34 @@
         color: red;
         font-weight: bold;
     }
+    #boton-regresar {
+        background-color: #f1f1f1;
+        color: black;
+            border: none;
+            padding: 5px 15px;
+            font-size: 17px;
+            cursor: pointer;
+            border-radius: 45%;
+        }
+
+    #boton-regresar:hover {
+        background-color: #898989;
 </style>
-    <div class="container">
-        <div class="title-container">
-            <h4>Lista de resultados</h4>
+<div class="header"> <!-- Agrega margen superior -->
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <div
+            class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% else %}alert-info{% endif %}">
+            <li>{{ message }}</li>
         </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <h4>Lista de resultados</h4>
+</div>
+<button id="boton-regresar" onclick="goBack()"> < Regresar</button>
+    <div class="container">
         <table class="table table-hover">
             {% if cond %}
             <thead class="thead-light">
@@ -293,6 +316,10 @@
             window.location.href = url; // Redireccionar si se confirma
         }
         });
+    }
+    function goBack() {
+            // Utilizamos la función history.back() para regresar a la página anterior
+            window.history.back();
     }
 </script>
 {% endblock %}

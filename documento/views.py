@@ -136,10 +136,10 @@ def index(request):
                 cond = False
                 try:
                     resultado = Resultado.objects.get(management= gestion)
-                    cond = True
+                    #listaDocumentos.append(resultado)
+                    cond = "Analizado"
                 except Resultado.DoesNotExist:
-                     print("el resultado esta procesandose, o no existe en la base de datos")
-                     cond = False
+                     cond = "Por analizar"
                 documento_dict = {**gestion.documento.__dict__, 'analizado': cond, 'nombre': gestion.documento.get_nombre_archivo}
                 listaDocumentos.append(documento_dict)
             return render (request, 'documento/index.html', locals())
