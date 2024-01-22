@@ -4,7 +4,7 @@ from googlesearch import search
 from bs4 import BeautifulSoup
 from nltk import word_tokenize
 from .metodos_de_similitud import obtener_similitud, similitud
-from .helper import porcentajes_de_aparicion_internet, porcentajes_de_aparicion_otros_tics, preparar_oracion, mutex
+from .helper import porcentajes_de_aparicion_internet, log, porcentajes_de_aparicion_otros_tics, preparar_oracion, mutex
 from .procesamiento_de_archivos import limpieza
 from .redes_neuronales import calcular_similitud
 
@@ -45,17 +45,23 @@ def obtener_oracion_mas_parecida_del_dataset(oracion, oracion_preparada, archivo
 
 def obtener_html_como_texto(url):
     try:
+        response = requests.get(url)
         html = requests.get(url).text
     except requests.exceptions.ConnectionError:
+        print("error obteniendo url")
         return ''
-    soup = BeautifulSoup(html, features='lxml')
-    for script in soup(["script", "style"]):
-        script.extract()
-    text = soup.get_text()
-    lines = (line.strip() for line in text.splitlines())
-    chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-    text = '\n'.join(chunk for chunk in chunks if chunk)
-    return text
+    if response.status_code == 200:
+        
+        soup = BeautifulSoup(html, features='lxml')
+        for script in soup(["script", "style"]):
+            script.extract()
+        text = soup.get_text()
+        lines = (line.strip() for line in text.splitlines())
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        text = '\n'.join(chunk for chunk in chunks if chunk)
+        return text
+    else:
+        return ''
 
 
 def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, cantidad_de_links, buscar_en_pdfs):
@@ -68,37 +74,44 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
     mutex.acquire()
     #aqui
     for url in search(oracion_preparada, tld="com.ar", num=cantidad_de_links, stop=cantidad_de_links, pause=2):
-        time.sleep(0.002)
-        mutex.release()
-        if (not buscar_en_pdfs) and url.endswith(".pdf") or str(url).endswith(".pdf/"):
-            mutex.acquire()
-            continue
-        else:
-            texto = obtener_html_como_texto(url)
-            if texto != '':
-                archivo = limpieza(texto)
-                for oracion_a_comparar in archivo:
-                    oracion_a_comparar_preparada = preparar_oracion(oracion_a_comparar, sw)
-                    if oracion_a_comparar_preparada is None:
-                        continue
-                    similitud = obtener_similitud(oracion_preparada, oracion_a_comparar_preparada)
-                    if similitud > 0.8:
-                        mayor_porcentaje = similitud
-                        oracion_mas_parecida = oracion_a_comparar
-                        url_donde_se_encontro = url
-                        archivo_donde_se_encontro = archivo
-                        ubicacion_dentro_de_la_lista = int(archivo.index(oracion_a_comparar))
-                        break
-                    elif similitud > mayor_porcentaje:
-                        mayor_porcentaje = similitud
-                        oracion_mas_parecida = oracion_a_comparar
-                        url_donde_se_encontro = url
-                        archivo_donde_se_encontro = archivo
-                        ubicacion_dentro_de_la_lista = int(archivo.index(oracion_a_comparar))
-        if mayor_porcentaje > 0.8:
-            mutex.acquire()
+        try:
+            print("try")
+            time.sleep(0.002)
+            mutex.release()
+            if (not buscar_en_pdfs) and url.endswith(".pdf") or str(url).endswith(".pdf/"):
+                mutex.acquire()
+                continue
+            else:
+                texto = obtener_html_como_texto(url)
+                if texto != '':
+                    archivo = limpieza(texto)
+                    for oracion_a_comparar in archivo:
+                        oracion_a_comparar_preparada = preparar_oracion(oracion_a_comparar, sw)
+                        if oracion_a_comparar_preparada is None:
+                            continue
+                        similitud = obtener_similitud(oracion_preparada, oracion_a_comparar_preparada)
+                        if similitud > 0.8:
+                            mayor_porcentaje = similitud
+                            oracion_mas_parecida = oracion_a_comparar
+                            url_donde_se_encontro = url
+                            archivo_donde_se_encontro = archivo
+                            ubicacion_dentro_de_la_lista = int(archivo.index(oracion_a_comparar))
+                            break
+                        elif similitud > mayor_porcentaje:
+                            mayor_porcentaje = similitud
+                            oracion_mas_parecida = oracion_a_comparar
+                            url_donde_se_encontro = url
+                            archivo_donde_se_encontro = archivo
+                            ubicacion_dentro_de_la_lista = int(archivo.index(oracion_a_comparar))
+            if mayor_porcentaje > 0.8:
+                mutex.acquire()
+                break
+        except Exception as e:
+            print("error encontrado")
+            log.error(f"Error al procesar la URL {url}: {e}")
             break
-        mutex.acquire()
+        finally:
+            mutex.acquire()
     time.sleep(0.002)
     mutex.release()
     ubicacion_principio = sum(map(len, map(word_tokenize, archivo_donde_se_encontro[:ubicacion_dentro_de_la_lista])))

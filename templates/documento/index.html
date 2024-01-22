@@ -264,17 +264,15 @@
                     <td>{{documentos.nombre}}</td>
                     <td>{{documentos.analizado}}</td>
                     {% if request.user|has_group:"docente" %}
-                        {% if resultado.ejecutando or resultado.ejecutando == True%}
+                        {% if documentos.ejecutando or documentos.ejecutando == "True"%}
                         <td><span style='color:red'>Ejecucion en proceso...</span></td>
-                    {%else%}
-                    <td>
-                        <a class="btn custom-btn-danger"
-                            onclick="confirmDeleteAndRedirect('{% url 'eliminar_documento' documentos.documento_id %}')"
-                            role="button"><i class="fas fa-trash"></i></a>
-                        
-                    </td>
-                    {% endif %}
-                    
+                        {%else%}
+                        <td>
+                            <a class="btn custom-btn-danger"
+                                onclick="confirmDeleteAndRedirect('{% url 'eliminar_documento' documentos.documento_id %}')"
+                                role="button"><i class="fas fa-trash"></i></a>
+                        </td>
+                        {% endif %}
                     {% endif %}
                 </tr>
                 {% endfor %}

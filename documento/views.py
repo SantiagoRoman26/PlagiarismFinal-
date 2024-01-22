@@ -136,11 +136,10 @@ def index(request):
                 cond = False
                 try:
                     resultado = Resultado.objects.get(management= gestion)
-                    #listaDocumentos.append(resultado)
                     cond = "Analizado"
                 except Resultado.DoesNotExist:
                      cond = "Por analizar"
-                documento_dict = {**gestion.documento.__dict__, 'analizado': cond, 'nombre': gestion.documento.get_nombre_archivo}
+                documento_dict = {**gestion.documento.__dict__, 'analizado': cond, 'nombre': gestion.documento.get_nombre_archivo,'ejecutando': resultado.ejecutando}
                 listaDocumentos.append(documento_dict)
             return render (request, 'documento/index.html', locals())
         elif (user.groups.filter(name = "estudiante").exists()):
