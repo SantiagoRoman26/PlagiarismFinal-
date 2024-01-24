@@ -20,11 +20,9 @@ def obtener_similitud_del_coseno(vector1, vector2):
     else:
         return float(numerador) / denominador
 
-
 def string_a_vector(texto):
     palabras = re.compile(r'\w+').findall(texto)
     return Counter(palabras)
-
 
 def obtener_similitud(texto1, texto2):
     vector1 = string_a_vector(texto1)
