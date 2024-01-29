@@ -50,7 +50,6 @@ def obtener_plagio_de_internet(texto_archivo_test_limpio, sw, cantidad_de_links,
     log.info("PLAGIO_DE_INTERNET | Obteniendo plagio de paginas de internet...")
     hilos_plagio_de_internet = list()
     for oracion in texto_archivo_test_limpio:
-        print("afor")
         oracion_preparada = preparar_oracion(oracion, sw)
         if oracion_preparada is None:
             continue
