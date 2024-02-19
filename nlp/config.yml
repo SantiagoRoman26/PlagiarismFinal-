@@ -4,4 +4,4 @@ path_resultado: Resultado/
 pares_textos_path: Pares_Textos/
 cantidad_de_topicos: 2
 cantidad_de_links: 1
-buscar_en_pdfs: False
+buscar_en_pdfs: True

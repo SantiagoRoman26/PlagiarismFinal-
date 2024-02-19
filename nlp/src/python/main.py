@@ -124,7 +124,7 @@ def main(directorio_archivo, lista_archivos_adicionales=[]):
         log.info(f"Total de {len(plagio)} plagios encontrados en {tiempo_que_tardo}")
 
         # porcentaje_de_plagio = int((len(plagio) * 100) / len(texto_archivo_test_limpio))
-        porcentaje_de_plagio = 0
+        porcentaje_de_plagio = 1
         for oracion, plagios, porcentaje, url, ubicacion in plagio:
             porcentaje_de_plagio += porcentaje
         try:
@@ -133,7 +133,7 @@ def main(directorio_archivo, lista_archivos_adicionales=[]):
             else:
                 porcentaje_de_plagio = int((len(plagio) * 100) / len(texto_archivo_test_limpio))
         except ZeroDivisionError:
-            porcentaje_de_plagio = 0
+            porcentaje_de_plagio = 1
 
         log.warning(f"num oraciones: {len(texto_archivo_test_limpio)}")
         documento_generado,nombre =guardar_resultado(nombre_archivo, plagio, tiempo_que_tardo, porcentaje_de_plagio, os.path.join(base_dir,config["path_resultado"]), os.path.join(base_dir,config["path_archivos_referencia"])) #aqui

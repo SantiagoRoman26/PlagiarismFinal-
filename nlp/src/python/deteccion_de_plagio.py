@@ -1,12 +1,13 @@
 import time
 import requests
-from googlesearch import search
+import googlesearch
 from bs4 import BeautifulSoup
 from nltk import word_tokenize
 from .metodos_de_similitud import obtener_similitud, similitud
 from .helper import porcentajes_de_aparicion_internet, log, porcentajes_de_aparicion_otros_tics, preparar_oracion, mutex
 from .procesamiento_de_archivos import limpieza
 from .redes_neuronales import calcular_similitud
+import concurrent.futures
 
 
 def obtener_oracion_mas_parecida_del_dataset(oracion, oracion_preparada, archivo_test_txt, archivos_referencia, sw):
@@ -62,7 +63,6 @@ def obtener_html_como_texto(url):
     else:
         return ''
 
-
 def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, cantidad_de_links, buscar_en_pdfs):
     mayor_porcentaje = 0.0
     oracion_mas_parecida = ''
@@ -70,10 +70,13 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
     archivo_donde_se_encontro = ''
     ubicacion_dentro_de_la_lista = 0
 
-   
-    try:
-        mutex.acquire()
-        for url in search(oracion_preparada, num_results=cantidad_de_links, lang= "es", sleep_interval=7):
+    mutex.acquire()
+    def buscar_en_internet(url):
+        nonlocal mayor_porcentaje, oracion_mas_parecida, url_donde_se_encontro, archivo_donde_se_encontro, ubicacion_dentro_de_la_lista  
+        try:
+            for url in googlesearch.search(oracion_preparada, num_results=cantidad_de_links, lang= "es", sleep_interval=15):
+            #for url in googlesearch.search(oracion_preparada, lang= "es", tld='com', num=cantidad_de_links, stop=cantidad_de_links, pause=15.0, verify_ssl = False):
+                print("url:",url)
                 time.sleep(0.2)
                 mutex.release()
                 if (not buscar_en_pdfs) and url.endswith(".pdf") or str(url).endswith(".pdf/"):
@@ -83,7 +86,7 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
                     texto = obtener_html_como_texto(url)
                     if texto != '':
                         archivo = limpieza(texto)
-                        if len(archivo) > 15000:
+                        if len(archivo) > 20000:
                             log.info(f"PLAGIO_DE_INTERNET |Archivo web demasiado extenso omitiendo")
                             continue
                         for oracion_a_comparar in archivo:
@@ -104,13 +107,25 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
                                 url_donde_se_encontro = url
                                 archivo_donde_se_encontro = archivo
                                 ubicacion_dentro_de_la_lista = int(archivo.index(oracion_a_comparar))
+                        print("fin for")
                 if mayor_porcentaje > 0.8:
                     mutex.acquire()
+                    print("break")
                     break
+
                 mutex.acquire()
-    except Exception as e:
-        print("error:",e)
-        time.sleep(3)  
+        except Exception as e:
+            print("error:",e)
+            time.sleep(3)  
+    # Límite de tiempo de 600 segundos (10 minutos)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(buscar_en_internet, None)
+        try:
+            result = future.result(timeout=600)
+        except concurrent.futures.TimeoutError:
+            print("Se alcanzó el límite de tiempo. La búsqueda en Internet se detendrá.")
+            
+
     time.sleep(0.2)
     try:
         mutex.release()
