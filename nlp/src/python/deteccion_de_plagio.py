@@ -70,17 +70,17 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
     archivo_donde_se_encontro = ''
     ubicacion_dentro_de_la_lista = 0
 
-    mutex.acquire()
+    #mutex.acquire()
     def buscar_en_internet(url):
         nonlocal mayor_porcentaje, oracion_mas_parecida, url_donde_se_encontro, archivo_donde_se_encontro, ubicacion_dentro_de_la_lista  
         try:
-            for url in googlesearch.search(oracion_preparada, num_results=cantidad_de_links, lang= "es", sleep_interval=15):
-            #for url in googlesearch.search(oracion_preparada, lang= "es", tld='com', num=cantidad_de_links, stop=cantidad_de_links, pause=15.0, verify_ssl = False):
+            #for url in googlesearch.search(oracion_preparada, num_results=cantidad_de_links, lang= "es", sleep_interval=15):
+            for url in googlesearch.search(oracion_preparada, lang= "es", tld='com', num=cantidad_de_links, stop=cantidad_de_links, pause=15.0, verify_ssl = False):
                 print("url:",url)
                 time.sleep(0.2)
-                mutex.release()
+                #mutex.release()
                 if (not buscar_en_pdfs) and url.endswith(".pdf") or str(url).endswith(".pdf/"):
-                    mutex.acquire()
+                    #mutex.acquire()
                     continue
                 else:
                     texto = obtener_html_como_texto(url)
@@ -109,11 +109,11 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
                                 ubicacion_dentro_de_la_lista = int(archivo.index(oracion_a_comparar))
                         print("fin for")
                 if mayor_porcentaje > 0.8:
-                    mutex.acquire()
+                    #mutex.acquire()
                     print("break")
                     break
 
-                mutex.acquire()
+                #mutex.acquire()
         except Exception as e:
             print("error:",e)
             time.sleep(3)  
@@ -121,14 +121,15 @@ def obtener_oracion_mas_parecida_de_internet(oracion, oracion_preparada, sw, can
     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
         future = executor.submit(buscar_en_internet, None)
         try:
-            result = future.result(timeout=600)
+            result = future.result(timeout=200)
         except concurrent.futures.TimeoutError:
             print("Se alcanzó el límite de tiempo. La búsqueda en Internet se detendrá.")
             
 
     time.sleep(0.2)
     try:
-        mutex.release()
+        None
+        #mutex.release()
     except Exception as e:
         None
     ubicacion_principio = sum(map(len, map(word_tokenize, archivo_donde_se_encontro[:ubicacion_dentro_de_la_lista])))
