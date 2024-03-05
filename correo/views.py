@@ -67,8 +67,13 @@ def emailCompartir(correos, comentario, User_nombre, archivo_adjunto):
     email.send()
     print ('Correo Compartir Enviado!')
 
-def emailResultado(mail):
-    context = { 'mail' : mail }
+def emailResultado(mail, User_nombre, url):
+
+    context = { 
+               'mail' : mail,
+               'user_nombre' : User_nombre,
+               'url' : url,
+               }
     template = get_template('correo/proceso_concluido.html')
     content = template.render(context)
     email = EmailMultiAlternatives(

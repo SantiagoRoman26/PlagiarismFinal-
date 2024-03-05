@@ -131,7 +131,7 @@ def main(directorio_archivo, lista_archivos_adicionales=[]):
             if len(plagio) >len(texto_archivo_test_limpio):
                 porcentaje_de_plagio = 100
             else:
-                porcentaje_de_plagio = int((len(plagio) * 100) / len(texto_archivo_test_limpio))
+                porcentaje_de_plagio = ((len(plagio) * 100) / len(texto_archivo_test_limpio))
         except ZeroDivisionError:
             porcentaje_de_plagio = 1
 

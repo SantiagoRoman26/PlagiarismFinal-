@@ -30,13 +30,13 @@ def detectar(request, gestion_id):
         documento.estado = False
         documento.save()
         # Ejecutar el proceso asíncrono en un hilo separado
-        threading.Thread(target=processo_asincrono, args=(gestion_id, directorio_archivo, usuario.correo,user)).start()
+        threading.Thread(target=processo_asincrono, args=(gestion_id, directorio_archivo, usuario.correo,user, request)).start()
 
         # Continuar con la lógica de la vista después de que termine el proceso asíncrono
         return render (request, 'documento/ejecutando.html', locals())
     return render(request, 'homepage.html')
 # Tu función asíncrona processo_asincrono
-def processo_asincrono(gestion_id, directorio_archivo, correo,user):
+def processo_asincrono(gestion_id, directorio_archivo, correo, user, request):
     lista_archivos = obtener_documentos(user)
     # Lógica para el proceso asíncrono, por ejemplo, llamar a main.main()
     gestion = GestionDocumentos.objects.get(gestion_id=gestion_id)
@@ -51,7 +51,8 @@ def processo_asincrono(gestion_id, directorio_archivo, correo,user):
     resultado.plagio = plagio
     resultado.informacion = informacion
     resultado.save()
-    emailResultado(correo)
+    url = request.build_absolute_uri()
+    emailResultado(correo, user.username, url)
     return HttpResponseRedirect(reverse('revision', args=[resultado.resultado_id]))
 
 def obtener_documentos(user):

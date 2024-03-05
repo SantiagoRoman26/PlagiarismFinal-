@@ -1,1 +1,71 @@
-se termino el analisis.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificación de Finalización de Proceso</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        p {
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        /* Estilos específicos para el mensaje */
+        .message {
+            margin-top: 20px;
+        }
+
+        .message p:first-child {
+            margin-top: 0;
+        }
+
+        /* Estilos para el botón */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Notificación de Finalización de Analisis</h1>
+        <div class="message">
+            <p>Estimado {{ user_nombre }}, </p>
+            <p>Le informamos que el analisis de su documento ha finalizado exitosamente.</p>
+        </div>
+        <a href="{{ url }}" class="btn">Ir al Sitio Web</a>
+    </div>
+</body>
+
+</html>

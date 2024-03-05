@@ -210,7 +210,7 @@ def guardar_resultado(nombre_archivo, plagio, tiempo_que_tardo, porcentaje_de_pl
     # Agregar información del análisis de plagio al PDF
     pdf_content.append(Paragraph(f'Análisis de plagio', getSampleStyleSheet().get('Heading1')))
     pdf_content.append(Paragraph(f'Total de {len(plagio)} plagios encontrados en {tiempo_que_tardo}', getSampleStyleSheet().get('Normal')))
-    pdf_content.append(Paragraph(f'Porcentaje de plagio general: {porcentaje_de_plagio}%', getSampleStyleSheet().get('Normal')))
+    pdf_content.append(Paragraph(f'Porcentaje de plagio general: {porcentaje_de_plagio:.2f}%', getSampleStyleSheet().get('Normal')))
     pdf_content.append(Spacer(1, 12))  # Espacio en blanco entre párrafos
 
     # Crear una lista con los datos de plagio para la tabla
