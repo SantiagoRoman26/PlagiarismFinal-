@@ -1,15 +1,30 @@
 {% extends 'master.html' %}
 {% load auth_extras %}
 {% block contenido %}
+<style>
+#boton-regresar {
+    background-color: #f1f1f1;
+    color: black;
+        border: none;
+        padding: 5px 15px;
+        font-size: 17px;
+        cursor: pointer;
+        border-radius: 45%;
+    }
 
+#boton-regresar:hover {
+    background-color: #898989;
+}
+</style>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tu Tabla con Bootstrap</title>
+    <title>Detalle Plagio</title>
     <!-- Agrega aquí los estilos de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+    <button id="boton-regresar" onclick="goBack()"> < Regresar</button>
     <div class="container">
         <h2>Tabla de Plagios</h2>
         <div style="text-align: center;">
@@ -160,7 +175,11 @@
         // Agregar los eventos a los botones de confirmar y descartar
         document.getElementById('btn-confirmar').addEventListener('click', confirmarCambios);
         document.getElementById('btn-descartar').addEventListener('click', descartarCambios);
-    
+        
+        function goBack() {
+            // Utilizamos la función history.back() para regresar a la página anterior
+            window.history.back();
+        }
     </script>
     
 </body>

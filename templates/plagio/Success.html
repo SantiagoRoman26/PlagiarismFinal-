@@ -41,7 +41,21 @@
         color: #fff;
         border: none;
     }
+    #boton-regresar {
+        background-color: #f1f1f1;
+        color: black;
+            border: none;
+            padding: 5px 15px;
+            font-size: 17px;
+            cursor: pointer;
+            border-radius: 45%;
+        }
+
+    #boton-regresar:hover {
+        background-color: #898989;
+    }
 </style>
+<button id="boton-regresar" onclick="goBack()"> < Regresar</button>
 <div class="container">
     {% if resultado %}
         {% if resultado.estado %}
@@ -67,4 +81,10 @@
         </div>
     {% endif %}
 </div>
+<script>
+    function goBack() {
+        // Utilizamos la función history.back() para regresar a la página anterior
+        window.history.back();
+    }
+</script>
 {% endblock %}
