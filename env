@@ -1,7 +1,0 @@
-SECRET_KEY = 'django-insecure-hhzg+zzv!t98b+ol)tifd19j*$zei&)^&l73n5qoc9dgwlx196'
-DB_NAME = plagiarism_detector
-DB_USER = santi2686
-DB_PASSWORD = S@nti2686
-DB_HOST = localhost
-DB_PORT = 3306
-DATABASE_TLS_ENABLED= True
