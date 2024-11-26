@@ -11,11 +11,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [ '*' ]
+ALLOWED_HOSTS = [ '*' , '10.10.185.159']
 
 CORS_ALLOW_ALL_ORIGINS=True
 
-CSRF_TRUSTED_ORIGINS = [ 'https://antiplagiodocker.azurewebsites.net/*']
+CSRF_TRUSTED_ORIGINS = [ 'https://antiplagiodocker.azurewebsites.net/*','https://computacion.unl.edu.ec/integriscan/*']
 
 
 # Database
@@ -34,6 +34,7 @@ DATABASES = {
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'templates/static/')
 
+FORCE_SCRIPT_NAME = '/integriscan'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'uploads'
 # STATIC_URL = 'static/'

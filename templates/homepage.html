@@ -94,7 +94,7 @@
                 <p class="card-text">Configurar las opciones de Django</p>
             </div>
             <div>
-                <a href="/admin" class="buttonClass">Admin</a>
+                <a href="{% url 'admin:index' %}" class="buttonClass">Admin</a>
             </div>
         </div>
 
@@ -105,7 +105,7 @@
                 <p class="card-text">Gestionar los usuarios.</p>
             </div>
             <div>
-                <a href="/usuario" class="buttonClass">Usuario</a>
+                <a href="{% url 'usuarios' %}" class="buttonClass">Usuario</a>
             </div>
         </div>
         {% else %}
@@ -116,7 +116,7 @@
                 <p class="card-text">Ver los resultados generados</p>
             </div>
             <div>
-                <a href="/plagio" class="buttonClass">Resultados</a>
+                <a href="{% url 'resultados' %}" class="buttonClass">Resultados</a>
             </div>
         </div>
 
@@ -127,7 +127,7 @@
                 <p class="card-text">Ver documentos subidos</p>
             </div>
             <div>
-                <a href="/documento" class="buttonClass">Documentos</a>
+                <a href="{% url 'documentos' %}" class="buttonClass">Documentos</a>
             </div>
         </div>
         <div class="card card_hotel">
@@ -137,7 +137,7 @@
                 <p class="card-text">Subir un nuevo documento</p>
             </div>
             <div>
-                <a href="/documento/upload" class="buttonClass">Analisis</a>
+                <a href="{% url 'subir_archivo' %}" class="buttonClass">Analisis</a>
             </div>
         </div>
         {% endif %}
