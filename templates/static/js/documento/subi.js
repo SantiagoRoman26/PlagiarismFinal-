@@ -15,7 +15,7 @@ window.onload = function() {
       formData.append('archivo', file);
 
       var xhr = new XMLHttpRequest();
-      xhr.open('POST', '/documento/upload', true);
+      xhr.open('POST', '/integriscan/documento/upload', true);
 
       // Obtener el valor del token CSRF del formulario
       var csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
@@ -29,15 +29,38 @@ window.onload = function() {
       });
 
       xhr.onload = function() {
+        console.error("inicio de la funcion");
         if (xhr.status === 200) {
-          // La solicitud AJAX se completó con éxito, redirigir al usuario a la vista visualizar_archivo
-          var response = JSON.parse(xhr.responseText);
-          window.location.href = response.redirect_url;
+          try {
+            var response = JSON.parse(xhr.responseText);
+            if (response.redirect_url) {
+              window.location.href = response.redirect_url;
+            } else {
+              console.error('Respuesta válida, pero falta "redirect_url". Respuesta completa:', response);
+            }
+          } catch (e) {
+            console.error('Error al analizar la respuesta JSON:', e, 'Respuesta recibida:', xhr.responseText);
+          }
         } else {
-          // La solicitud AJAX no se completó correctamente, mostrar mensaje de error o tomar alguna acción apropiada
-          console.error('Error en la solicitud AJAX');
+          console.error('Error en la solicitud AJAX:', {
+            status: xhr.status,
+            statusText: xhr.statusText,
+            response: xhr.responseText
+          });
         }
       };
+      
+      xhr.onerror = function() {
+        console.error('Error de red en la solicitud AJAX:', {
+          status: xhr.status,
+          statusText: xhr.statusText
+        });
+      };
+      
+      xhr.ontimeout = function() {
+        console.error('La solicitud AJAX ha excedido el tiempo de espera.');
+      };
+      
 
       xhr.send(formData);
     } else {
